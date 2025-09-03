@@ -1,10 +1,8 @@
 
-#include <stdio.h>
+#include "../include/minishell.h"
 
-void loop ();
-
-int main ()
+int	main(void)
 {
-	loop();
-	return 0;
+	promt();
+	return (0);
 }
