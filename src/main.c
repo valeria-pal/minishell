@@ -3,6 +3,10 @@
 
 int	main(void)
 {
-	promt();
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	prompt();
+
+
 	return (0);
 }
