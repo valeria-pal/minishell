@@ -1,8 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
-SRC = src/main.c \
-      src/promt.c
+SRC = src/main.c src/tokenizer.c src/helper.c
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 RM = rm -f
