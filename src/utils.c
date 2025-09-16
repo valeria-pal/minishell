@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/09 12:21:07 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:54:34 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	*ft_memset(void *s, int value, size_t n)
+{
+	size_t			i;
+	unsigned char	*arr;
+
+	i = 0;
+	arr = (unsigned char *)s;
+	while (i < n)
+	{
+		arr[i] = (unsigned char)value;
+		i++;
+	}
+	return (s);
+}
 
 int	is_space(char c)
 {
@@ -33,4 +48,10 @@ char	*dup_str(const char *s, size_t n)
 	}
 	str[n] = '\0';
 	return (str);
+}
+void	rl_utils(void)
+{
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

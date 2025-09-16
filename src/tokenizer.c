@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/09 12:19:57 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/09/16 12:54:32 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_token	*new_token(char *value, t_toktype type)
+static t_token	*new_token(char *value, t_toktype type)
 {
 	t_token	*t;
 
@@ -25,19 +25,7 @@ t_token	*new_token(char *value, t_toktype type)
 	return (t);
 }
 
-int	append_token(t_token **head, t_token **tail, t_token *node)
-{
-	if (!node)
-		return (0);
-	if (!*head)
-		*head = node;
-	else
-		(*tail)->next = node;
-	*tail = node;
-	return (1);
-}
-
-int	add_word_token(const char *start, size_t len, t_token **head,
+static int	add_word_token(const char *start, size_t len, t_token **head,
 		t_token **tail)
 {
 	char	*w;
@@ -55,7 +43,7 @@ int	add_word_token(const char *start, size_t len, t_token **head,
 	return (append_token(head, tail, node));
 }
 
-int	add_eol_token(t_token **head, t_token **tail)
+static int	add_eol_token(t_token **head, t_token **tail)
 {
 	t_token	*eol;
 
@@ -65,7 +53,7 @@ int	add_eol_token(t_token **head, t_token **tail)
 	return (append_token(head, tail, eol));
 }
 
-t_token	*tokenize(const char *line)
+static t_token	*tokenize(const char *line)
 {
 	size_t	i;
 	size_t	start;
@@ -92,4 +80,19 @@ t_token	*tokenize(const char *line)
 	if (!add_eol_token(&head, &tail))
 		return (free_tokenlist(head), NULL);
 	return (head);
+}
+
+void	tokenize_output(const char *line)
+{
+	t_token	*tokens;
+
+	tokens = tokenize(line);
+	if (!tokens)
+	{
+		printf("Tokenization failed\n");
+		free((char *)line);
+		return ;
+	}
+	print_tokens(tokens);
+	free_tokenlist(tokens);
 }
