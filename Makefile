@@ -3,7 +3,9 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 SRC = src/main.c \
       src/prompt.c\
-	  src/handle_signals.c
+	  src/signals.c\
+	  src/utils.c\
+	  
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 RM = rm -f

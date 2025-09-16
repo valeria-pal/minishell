@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 10:24:05 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/16 10:24:09 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/09/16 10:29:56 by vpaliash          #+#    #+#             */
+/*   Updated: 2025/09/16 10:39:53 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(void)
+void	*ft_memset(void *s, int value, size_t n)
 {
-	set_termios();
-	setup_signals();
-	prompt();
+	size_t i;
+	unsigned char *arr;
 
-
-	return (0);
+	i = 0;
+	arr = (unsigned char *)s;
+	while (i < n)
+	{
+		arr[i] = (unsigned char)value;
+		i++;
+	}
+	return (s);
 }
