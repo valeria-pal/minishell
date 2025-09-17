@@ -6,7 +6,7 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:23:47 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:18 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/17 13:15:47 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	signal_handler(int signum)
 	if (signum == SIGINT)
 	{
 		g_sig = SIGINT;
-		write(2, "\n", 1);
+		write(1, "\n", 1);
+		rl_utils();
 	}
 	else if (signum == SIGQUIT)
 	{
@@ -42,8 +43,8 @@ void	setup_signals(void)
 void	set_termios(void)
 {
 	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+		return;
 	term.c_lflag = term.c_lflag & ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
