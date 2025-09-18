@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:23:47 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:18 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:25:46 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
 
 volatile sig_atomic_t	g_sig = 0;

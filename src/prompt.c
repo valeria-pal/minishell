@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:15:46 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/16 12:53:06 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:25:35 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
 
 void	prompt(void)

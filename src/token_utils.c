@@ -6,10 +6,11 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:10:06 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/18 21:03:57 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:25:49 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
 
 void	print_tokens(t_token *t)

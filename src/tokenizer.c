@@ -6,12 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/18 21:13:29 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:25:56 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
-
 
 static t_toktype	get_operator_type(const char *s, int *len)
 {

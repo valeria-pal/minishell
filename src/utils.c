@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:34 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:26:01 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
 
 void	*ft_memset(void *s, int value, size_t n)
