@@ -1,5 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+IFLAG =  -Iinclude
 LDFLAGS = -lreadline
 SRC = src/main.c \
 	  src/utils.c \
@@ -7,6 +8,10 @@ SRC = src/main.c \
 	  src/signals.c \
 	  src/prompt.c \
 	  src/token_utils.c \
+	  src/string_utils.c\
+	  src/executor/executor_utils.c\
+	  src/executor/split.c \
+	  src/executor/execute_function.c \
 
 	  
 OBJ = $(SRC:.c=.o)
@@ -16,10 +21,10 @@ RM = rm -f
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAG) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(IFLAG) $(OBJ) -o $(NAME) $(LDFLAGS) 
 
 
 clean:
