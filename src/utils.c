@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:34 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/25 20:55:20 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../include/minishell.h"
 
 void	*ft_memset(void *s, int value, size_t n)
@@ -54,4 +55,28 @@ void	rl_utils(void)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	char	*p;
+	int		i;
+
+	i = 0;
+	while (s1[i])
+		i++;
+	ptr = malloc(i + 1);
+	if (ptr == NULL)
+		return (NULL);
+	p = ptr;
+	i = 0;
+	while (s1[i])
+	{
+		*p = s1[i];
+		p++;
+		i++;
+	}
+	*p = '\0';
+	return (ptr);
 }

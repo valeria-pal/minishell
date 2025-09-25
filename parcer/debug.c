@@ -1,22 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:13:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/18 22:17:07 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/09/25 11:34:07 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/09/25 20:52:49 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-int	main(void)
+void	print_commands(t_command *cmd)
 {
-	set_termios();
-	setup_signals();
-	prompt();
-	return (0);
+	int				c;
+	t_redirection	*r;
+	int				i;
+
+	c = 0;
+	while (cmd)
+	{
+		printf("Command %d:\n", c++);
+		printf("  argv: ");
+		if (cmd->argv)
+		{
+			i = 0;
+			while (cmd->argv[i])
+			{
+				printf("%s ", cmd->argv[i]);
+				i++;
+			}
+		}
+		printf("\n");
+		printf("  redirs: ");
+		r = cmd->redirs;
+		while (r)
+		{
+			printf("%d, %s ", r->type, r->filename);
+			r = r->next;
+		}
+		printf("\n");
+		cmd = cmd->next;
+	}
 }
