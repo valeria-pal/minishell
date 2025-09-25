@@ -6,7 +6,7 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:13:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/25 17:44:01 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/09/25 17:57:07 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int	main(int argc, char **argv, char *const envp[])
 
 	cmd->next = NULL;
 	cmd->args = malloc(2 * sizeof(char *));
-	cmd->args[0] = strdup("fohfowh");
+	cmd->args[0] = strdup("ls");
 	cmd->args[1] = NULL;
 	status = execute(cmd, envp);
 	if (status == 0)
 		printf("success\n");
 	else
-		printf("command failed: %d\n", status);
+		printf("%s: command not found\n", cmd->args[0]);
 	free(cmd->args[0]);
 	free(cmd->args);
 	free(cmd);
