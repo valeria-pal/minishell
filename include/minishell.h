@@ -17,8 +17,13 @@
 typedef enum e_toktype
 {
 	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
 	EOL
-}					t_toktype;
+}						t_toktype;
 
 // Token node
 typedef struct s_token
