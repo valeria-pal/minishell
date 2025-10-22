@@ -6,11 +6,11 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:10:06 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:29 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:28:32 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "executor.h"
 
 void	print_tokens(t_token *t)
 {

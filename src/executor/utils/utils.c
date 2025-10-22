@@ -6,11 +6,11 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/16 12:54:34 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:29:14 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "executor.h"
 
 void	*ft_memset(void *s, int value, size_t n)
 {

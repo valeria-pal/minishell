@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   redirection_appplication.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:15:46 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 11:27:09 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/10/22 10:27:31 by vpaliash          #+#    #+#             */
+/*   Updated: 2025/10/22 10:33:42 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	prompt(void)
+int	apply_redirections_to_cmd(const t_command *cmd)
 {
-	char	*line_read;
+	const t_redirection	*rd;
 
-	while (1)
+	if (!cmd || !cmd->redirs)
+		return (-1);
+	rd = cmd->redirs;
+	while (rd)
 	{
-		line_read = readline("minishell$ ");
-		if (!line_read)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
-		if (*line_read)
-			add_history(line_read);
-		tokenize_output(line_read);
-		if (line_read)
-		{
-			free(line_read);
-			line_read = NULL;
-		}
+		if (apply_redirect(rd) < 0)
+			return (-1);
+		rd = rd->next;
 	}
-	rl_clear_history();
+	return (0);
+}
+
+int	apply_all_redirections(t_command *head)
+{
+	if (!head)
+		return (-1);
+	t_command *cmd;
+	cmd = head;
+	while (cmd)
+	{
+		if (apply_redirections_to_cmd < 0)
+			return (-1);
+		cmd = cmd->next;
+	}
+	return (0);
 }

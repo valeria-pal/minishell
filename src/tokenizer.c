@@ -6,11 +6,11 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/16 16:58:24 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:27:57 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "executor.h"
 
 static t_token	*new_token(char *value, t_toktype type)
 {

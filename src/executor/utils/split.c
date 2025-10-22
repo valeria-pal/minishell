@@ -6,7 +6,7 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:46:00 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/25 16:29:06 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:32:10 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_split(char **arr)
 	start = arr;
 	while (*arr)
 	{
-		free(*arr);
+		free(*arr);int	is_space(char c);
 		arr++;
 	}
 	free(start);

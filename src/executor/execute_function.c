@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_function.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 10:55:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/19 11:13:56 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/22 11:33:40 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	decode_errors(int status)
 		return (128 + WTERMSIG(status));
 	return (1);
 }
-static int	check_id_after_fork(int id, char *path, t_cmd *cmd,
+static int	check_id_after_fork(int id, char *path, t_command *cmd,
 		char *const envp[])
 {
 	if (id < 0)
@@ -31,7 +31,7 @@ static int	check_id_after_fork(int id, char *path, t_cmd *cmd,
 	}
 	if (id == 0)
 	{
-		execve(path, cmd->args, envp);
+		execve(path, cmd->argv, envp);
 		perror("execve");
 		if (errno == EACCES)
 			exit(126);
@@ -40,16 +40,16 @@ static int	check_id_after_fork(int id, char *path, t_cmd *cmd,
 	}
 	return (0);
 }
-int	execute(t_cmd *cmd, char *const envp[])
+int	execute(t_command *cmd, char *const envp[])
 {
 	pid_t	id;
 	char	*path;
 	int		status;
 
-	if (!cmd || !cmd->args)
+	if (!cmd || !cmd->argv)
 		return (0);
 	status = 0;
-	path = find_path(cmd->args[0]);
+	path = find_path(cmd->argv[0]);
 	if (!path)
 		return (127);
 	id = fork();

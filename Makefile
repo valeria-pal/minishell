@@ -13,13 +13,9 @@ SRC = src/main.c \
 	src/executor/utils/utils.c \
 	src/executor/signals/signals.c \
 	src/executor/redirections/redirection_application.c \
-	src/executor/redirections/redirection_utils.c
+	src/executor/redirections/redirection_utils.c \
 
-OBJ := $(SRC:.c=.o)
-
-.PHONY: all clean fclean re
-
-	  
+ 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 RM = rm -f
@@ -40,3 +36,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
