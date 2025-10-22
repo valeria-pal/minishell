@@ -6,18 +6,18 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:15:09 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 13:31:22 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:52:33 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static char	*ret_free_cmd_with_backslash_and_path(char *ret,
+static char	*release_command_with_backslash_and_path(char *result,
 		char *cmd_with_backslash, char **start)
 {
 	free(cmd_with_backslash);
 	free_split(start);
-	return (ret);
+	return (result);
 }
 
 static char	*build_candidate_path(const char *cmd, const char *envp_path)
@@ -31,21 +31,21 @@ static char	*build_candidate_path(const char *cmd, const char *envp_path)
 	all_pathes_from_envp = ft_split(envp_path, ':');
 	start = all_pathes_from_envp;
 	if (!cmd_with_backslash || !all_pathes_from_envp)
-		return (ret_free_cmd_with_backslash_and_path(NULL, cmd_with_backslash,
+		return (release_command_with_backslash_and_path(NULL, cmd_with_backslash,
 				start));
 	while (*all_pathes_from_envp)
 	{
 		candidate_path = ft_strjoin(*all_pathes_from_envp, cmd_with_backslash);
 		if (!candidate_path)
-			return (ret_free_cmd_with_backslash_and_path(NULL,
+			return (release_command_with_backslash_and_path(NULL,
 					cmd_with_backslash, start));
 		if (!access(candidate_path, X_OK))
-			return (ret_free_cmd_with_backslash_and_path(candidate_path,
+			return (release_command_with_backslash_and_path(candidate_path,
 					cmd_with_backslash, start));
 		all_pathes_from_envp++;
 		free(candidate_path);
 	}
-	return (ret_free_cmd_with_backslash_and_path(NULL, cmd_with_backslash,
+	return (release_command_with_backslash_and_path(NULL, cmd_with_backslash,
 			start));
 }
 

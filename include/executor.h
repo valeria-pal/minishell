@@ -72,14 +72,8 @@ int								execute(t_command *cmd, char *const envp[]);
 // Redirections
 int								apply_redirect(t_redirection *rd);
 int								apply_redirections_to_cmd(t_command *cmd);
+int								apply_all_redirections(t_command *head);
 
-// Utils
-size_t							ft_strlen(const char *s);
-char							*ft_strdup(const char *s);
-char							*ft_strchr(const char *s, int c);
-char							**ft_split(char const *s, char c);
-char							*ft_strjoin(char const *s1, char const *s2);
-void							free_split(char **arr);
 
 // Utils
 char	**ft_split(char const *s, char c);

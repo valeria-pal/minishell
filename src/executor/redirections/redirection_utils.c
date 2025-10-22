@@ -6,7 +6,7 @@
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:28:07 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 11:43:16 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:57:36 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	apply_rd_append(t_redirection *rd)
 {
 	int	fd;
 
-	fd = open(rd->filename, O_RDONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(rd->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		perror(rd->filename);
@@ -104,6 +104,6 @@ int	apply_redirect(t_redirection *rd)
 		return (apply_rd_append(rd));
 	else if (rd->type == R_HEREDOC)
 		return (apply_heredoc(rd));
-	perror("unknown redirection type\n");
+	perror("unknown redirection type");
 	return (-1);
 }
