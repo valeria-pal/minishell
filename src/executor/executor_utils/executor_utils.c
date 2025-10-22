@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:15:09 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/25 21:24:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/22 13:31:22 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,5 @@ char	*find_path(const char *cmd)
 	free(envp_path);
 	return (candidate_path);
 }
+
+

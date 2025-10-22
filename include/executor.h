@@ -71,7 +71,7 @@ int								execute(t_command *cmd, char *const envp[]);
 
 // Redirections
 int								apply_redirect(t_redirection *rd);
-int								apply_redirections_to_cmd(const t_command *cmd);
+int								apply_redirections_to_cmd(t_command *cmd);
 
 // Utils
 size_t							ft_strlen(const char *s);

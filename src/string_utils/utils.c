@@ -1,44 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_application.c                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/22 10:27:31 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 13:42:56 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/10/22 13:32:00 by vpaliash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	apply_redirections_to_cmd( t_command *cmd)
+void	*ft_memset(void *s, int value, size_t n)
 {
-	t_redirection	*rd;
+	size_t			i;
+	unsigned char	*arr;
 
-	if (!cmd || !cmd->redirs)
-		return (-1);
-	rd = cmd->redirs;
-	while (rd)
+	i = 0;
+	arr = (unsigned char *)s;
+	while (i < n)
 	{
-		if (apply_redirect(rd) < 0)
-			return (-1);
-		rd = rd->next;
+		arr[i] = (unsigned char)value;
+		i++;
 	}
-	return (0);
+	return (s);
 }
 
-int	apply_all_redirections(t_command *head)
+int	is_space(char c)
 {
-	if (!head)
-		return (-1);
-	t_command *cmd;
-	cmd = head;
-	while (cmd)
-	{
-		if (apply_redirections_to_cmd < 0)
-			return (-1);
-		cmd = cmd->next;
-	}
-	return (0);
+	return (c == ' ' || c == '\t');
 }
+
+char	*dup_str(const char *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)malloc(n + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[n] = '\0';
+	return (str);
+}
+
