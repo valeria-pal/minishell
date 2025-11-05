@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:34:07 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/25 20:52:49 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/10/29 20:02:04 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_commands(t_command *cmd)
 			i = 0;
 			while (cmd->argv[i])
 			{
-				printf("%s ", cmd->argv[i]);
+				printf("%s\n", cmd->argv[i]);
 				i++;
 			}
 		}

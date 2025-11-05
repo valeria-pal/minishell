@@ -6,14 +6,24 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:41:58 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/25 20:53:03 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:17:29 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-// проверка на незнакомые знаки или комманды( можно в отдельной функции)
+static char	*normalize_word(char *original_word, char **envp)
+{
+	if (original_word[0] == SQ)
+		return (strip_single_quotes(original_word));
+	if (original_word[0] == DQ)
+		return (strip_double_quotes_and_expand(original_word, envp));
+	if (has_dollar(original_word))
+		return (expand_variable(ft_strdup(original_word), envp));
+	return (ft_strdup(original_word));
+	// otherwise we returning just duplication of the string to not fuck up the tocken
+}
 
 static int	count_args_until_pipe(t_token *tok)
 {
@@ -26,6 +36,7 @@ static int	count_args_until_pipe(t_token *tok)
 			count++;
 		else if (tok->type == REDIR_IN || tok->type == REDIR_OUT
 			|| tok->type == REDIR_APPEND || tok->type == HEREDOC)
+			// TODO check if works with only else
 			tok = tok->next;
 		tok = tok->next;
 	}
@@ -48,8 +59,7 @@ static int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	else
 		rtype = R_HEREDOC;
 	tok = tok->next;
-	// if (!tok || tok->type != WORD)
-	// 	return (printf("syntax error near redirection\n"), 0);
+	// проверка на синтаксическую ошибку
 	redir_node = new_redirection(rtype, tok->value);
 	if (!append_redirection(&cmd->redirs, redir_node))
 		return (0);
@@ -57,20 +67,19 @@ static int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	return (1);
 }
 
-static t_command	*parse_one_command(t_token **tok_ptr)
+static t_command	*parse_one_command(t_token **tok_ptr, char **envp)
 {
 	t_command	*cmd;
 	t_token		*tok;
-	int			argc;
 	int			i;
 
-	argc = count_args_until_pipe(*tok_ptr);
 	cmd = cmd_new();
 	if (!cmd)
 		return (NULL);
-	if (argc > 0)
+	if (count_args_until_pipe(*tok_ptr) > 0)
 	{
-		cmd->argv = malloc(sizeof(char *) * (argc + 1));
+		cmd->argv = malloc(sizeof(char *) * (count_args_until_pipe(*tok_ptr)
+					+ 1));
 		if (!cmd->argv)
 			return (free(cmd), NULL);
 	}
@@ -80,7 +89,7 @@ static t_command	*parse_one_command(t_token **tok_ptr)
 	{
 		if (tok->type == WORD)
 		{
-			cmd->argv[i] = ft_strdup(tok->value);
+			cmd->argv[i] = normalize_word(tok->value, envp);
 			if (!cmd->argv[i])
 				return (free_commands(cmd), NULL);
 			i++;
@@ -89,23 +98,23 @@ static t_command	*parse_one_command(t_token **tok_ptr)
 		else if (!add_redirection(cmd, &tok))
 			return (free_commands(cmd), NULL);
 	}
-	if (argc > 0)
+	if (count_args_until_pipe(*tok_ptr) > 0)
 		cmd->argv[i] = NULL;
 	*tok_ptr = tok;
 	return (cmd);
 }
 
-t_command	*parse_pipeline(t_token *tokens)
+t_command	*parse_pipeline(t_token *tokens, char **envp)
 {
-	t_command *head;
-	t_command *tail;
-	t_command *cmd;
+	t_command	*head;
+	t_command	*tail;
+	t_command	*cmd;
 
 	head = NULL;
 	tail = NULL;
 	while (tokens && tokens->type != EOL)
 	{
-		cmd = parse_one_command(&tokens);
+		cmd = parse_one_command(&tokens, envp);
 		if (!cmd)
 			return (free_commands(head), NULL);
 		if (!head)

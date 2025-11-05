@@ -6,44 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/25 20:53:30 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:51:36 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
-
-
-
-static t_toktype	get_operator_type(const char *s, int *len)
-{
-	if (s[0] == '|')
-	{
-		*len = 1;
-		return (PIPE);
-	}
-	else if (s[0] == '<' && s[1] == '<')
-	{
-		*len = 2;
-		return (HEREDOC);
-	}
-	else if (s[0] == '<')
-	{
-		*len = 1;
-		return (REDIR_IN);
-	}
-	else if (s[0] == '>' && s[1] == '>')
-	{
-		*len = 2;
-		return (REDIR_APPEND);
-	}
-	else if (s[0] == '>')
-	{
-		*len = 1;
-		return (REDIR_OUT);
-	}
-	return (WORD);
-}
 
 static int	get_word_len(const char *line, int i)
 {
@@ -60,7 +28,8 @@ static int	get_word_len(const char *line, int i)
 			i++;
 			len++;
 		}
-		if (!line[i])
+		if (!line[i]) //if unclosed we got to the end of null terminated string
+		//, so i is actualy NULL, hence error
 			return (-1);
 		len++;
 		return (len);
@@ -83,7 +52,6 @@ static t_toktype	get_token_type(const char *line, int i, int *len)
 		*len = get_word_len(line, i);
 	return (type);
 }
-
 
 int	process_token(const char *line, int *i, t_token **head,
 		t_token **tail)
@@ -136,7 +104,7 @@ t_token	*tokenize(const char *line)
 	return (head);
 }
 
-void	tokenize_output(const char *line)
+void	tokenize_output(const char *line, char **envp)
 {
 	t_token		*tokens;
 	t_command	*commands;
@@ -148,7 +116,7 @@ void	tokenize_output(const char *line)
 		return ;
 	}
 	print_tokens(tokens);
-	commands = parse_pipeline(tokens);
+	commands = parse_pipeline(tokens, envp);
 	if (!commands)
 	{
 		printf("Parsing failed\n");

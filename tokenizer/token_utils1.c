@@ -1,25 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   token_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:13:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/04 14:52:20 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/11/04 14:51:12 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/04 14:56:38 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+t_toktype	get_operator_type(const char *s, int *len)
 {
-	(void)argv;
-	if (argc != 1)
-		return (ft_putstr_fd("Incorrect arguments number!\n", 2), 1);
-	set_termios();
-	setup_signals();
-	prompt(envp);
-	return (0);
+	if (s[0] == '|')
+	{
+		*len = 1;
+		return (PIPE);
+	}
+	else if (s[0] == '<' && s[1] == '<')
+	{
+		*len = 2;
+		return (HEREDOC);
+	}
+	else if (s[0] == '<')
+	{
+		*len = 1;
+		return (REDIR_IN);
+	}
+	else if (s[0] == '>' && s[1] == '>')
+	{
+		*len = 2;
+		return (REDIR_APPEND);
+	}
+	else if (s[0] == '>')
+	{
+		*len = 1;
+		return (REDIR_OUT);
+	}
+	return (WORD);
 }

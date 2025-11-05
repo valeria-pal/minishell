@@ -7,10 +7,15 @@ SRC = src/main.c \
 	  src/prompt.c \
 	  tokenizer/token_utils.c \
 	  tokenizer/tokenizer.c \
+	  tokenizer/token_utils1.c\
 	  tokenizer/debug.c\
 	  parcer/parcer.c\
 	  parcer/debug.c\
-	  parcer/par_utils.c
+	  parcer/par_utils.c\
+	  parcer/quotes_and_expand.c\
+	  libft/libft_utils1.c\
+	  libft/libft_utils2.c\
+	  expander/exp_utils.c\
 
 
 OBJ = $(SRC:.c=.o)
