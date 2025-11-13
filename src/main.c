@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:13:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/04 14:52:20 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:36:21 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_bash	bash_struct;
+
 	(void)argv;
+	bash_struct.envp = envp;
+	bash_struct.last_exit_status = 0;
 	if (argc != 1)
-		return (ft_putstr_fd("Incorrect arguments number!\n", 2), 1);
+		return (ft_putstr_fd("Incorrect arguments count!\n", 2), 1);
 	set_termios();
 	setup_signals();
-	prompt(envp);
+	prompt(&bash_struct);
 	return (0);
 }

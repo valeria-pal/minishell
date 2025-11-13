@@ -13,8 +13,11 @@ SRC = src/main.c \
 	  parcer/debug.c\
 	  parcer/par_utils.c\
 	  parcer/quotes_and_expand.c\
+	  parcer/syntax_errors.c\
 	  libft/libft_utils1.c\
 	  libft/libft_utils2.c\
+	  libft/libft_utils3.c\
+	  libft/libft_utils4.c\
 	  expander/exp_utils.c\
 
 

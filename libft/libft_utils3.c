@@ -1,44 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils1.c                                     :+:      :+:    :+:   */
+/*   libft_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/04 14:51:12 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/11 19:20:00 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/11/13 12:35:45 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/13 12:35:50 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-t_toktype	get_operator_type(const char *s, int *len)
+static int	count_size(int n)
 {
-	if (s[0] == '|')
+	int	i;
+
+	i = 0;
+	if (n < 0)
+		n *= -1;
+	while (n != 0)
 	{
-		*len = 1;
-		return (PIPE);
+		n /= 10;
+		i++;
 	}
-	else if (s[0] == '<' && s[1] == '<')
+	return (i);
+}
+
+char	*ft_itoa(int num)
+{
+	char *dst;
+	int count;
+	int i;
+	long int n = num;
+
+	count = count_size(n);
+	i = 0;
+	if (n < 0 || count == 0)
+		count++;
+	if (!(dst = (char *)malloc((count + 1) * sizeof(char))))
+		return (NULL);
+	if (n < 0)
 	{
-		*len = 2;
-		return (HEREDOC);
+		n *= -1;
+		dst[0] = '-';
+		i++;
 	}
-	else if (s[0] == '<')
+	while (count > i)
 	{
-		*len = 1;
-		return (REDIR_IN);
+		count--;
+		dst[count] = (n % 10) + '0';
+		n /= 10;
 	}
-	else if (s[0] == '>' && s[1] == '>')
-	{
-		*len = 2;
-		return (REDIR_APPEND);
-	}
-	else if (s[0] == '>')
-	{
-		*len = 1;
-		return (REDIR_OUT);
-	}
-	return (WORD);
+	return (dst);
 }

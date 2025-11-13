@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:37:08 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/04 14:53:25 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:32:31 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,6 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-// static char	*ft_strcon(char const *s1, char const *s2, char *ptr)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*p;
-
-// 	p = ptr;
-// 	i = 0;
-// 	while (s1[i])
-// 	{
-// 		*p = s1[i];
-// 		p++;
-// 		i++;
-// 	}
-// 	j = 0;
-// 	while (s2[j])
-// 	{
-// 		*p = s2[j];
-// 		p++;
-// 		j++;
-// 	}
-// 	*p = '\0';
-// 	return (ptr);
-// }
-
-// char	*ft_strjoin(char const *s1, char const *s2)
-// {
-// 	char	*ptr;
-// 	int		i;
-// 	int		j;
-
-// 	i = ft_strlen(s1);
-// 	j = ft_strlen(s2);
-// 	ptr = malloc(i + j + 1);
-// 	if (ptr == NULL)
-// 		return (NULL);
-// 	return (ft_strcon(s1, s2, ptr));
-// }
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*res;

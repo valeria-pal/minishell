@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/04 15:20:43 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:38:18 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef enum e_toktype
 // Token node
 typedef struct s_token
 {
-	char *value; // NULL for EOL
+	char						*value;
 	t_toktype					type;
 	struct s_token				*next;
 }								t_token;
@@ -61,6 +61,12 @@ typedef struct s_redirection
 	struct s_redirection		*next;
 }								t_redirection;
 
+typedef struct s_bash
+{
+	int							last_exit_status;
+	char						**envp;
+}								t_bash;
+
 typedef struct s_command
 {
 	char						**argv;
@@ -79,19 +85,23 @@ char							*ft_strjoin(char const *s1, char const *s2);
 int								ft_isalpha(int c);
 int								ft_isalnum(char c);
 void							ft_putstr_fd(char *s, int fd);
+char							*ft_itoa(int num);
+int								ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // Tokenizer
-int								append_token(t_token **head, t_token **tail,
-									t_token *node);
+int append_token(t_token **head, t_token **tail, t_token *node);
 t_token							*new_token(char *value, t_toktype type);
 int								add_eol_token(t_token **head, t_token **tail);
 void							free_tokenlist(t_token *tok);
 void							print_tokens(t_token *t);
-void							tokenize_output(const char *line, char **envp);
+void							tokenize_output(const char *line,
+									t_bash *bash_struct);
 int								process_token(const char *line, int *i,
 									t_token **head, t_token **tail);
 int								skip_spaces(const char *line, int i);
 t_toktype						get_operator_type(const char *s, int *len);
+
+// Syntax check
 
 // Parcer
 t_redirection					*new_redirection(t_redir_type type,
@@ -100,18 +110,21 @@ int								append_redirection(t_redirection **head,
 									t_redirection *node);
 void							free_redirections(t_redirection *head);
 void							free_commands(t_command *cmd);
-t_command						*parse_pipeline(t_token *tokens, char **envp);
+t_command						*parse_pipeline(t_token *tokens,
+									t_bash *bash_struct);
 t_command						*cmd_new(void);
 void							print_commands(t_command *cmd);
-char							*expand_variable(char *string, char **envp);
+char							*expand_variable(char *string,
+									t_bash *bash_struct);
 char							*strip_double_quotes_and_expand(char *str,
-									char **envp);
+									t_bash *bash_struct);
 char							*strip_single_quotes(char *str);
 int								has_dollar(char *str);
-
+int								check_syntax_errors(t_token *tokens);
 
 // Expander
-char *my_getenv(char **env, const char *name);
+char							*my_getenv(t_bash *bash_struct,
+									const char *name);
 
 // Signals and terminal settings
 extern volatile sig_atomic_t	g_sig;
@@ -119,6 +132,6 @@ void							signal_handler(int signum);
 void							setup_signals(void);
 void							set_termios(void);
 void							rl_utils(void);
-void							prompt(char **envp);
+void							prompt(t_bash *bash_struct);
 
 #endif

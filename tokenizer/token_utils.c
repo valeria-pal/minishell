@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 20:56:42 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/09/25 20:53:16 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:57:38 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int	append_token(t_token **head, t_token **tail, t_token *node)
 	return (1);
 }
 
-/*
-When you free(tok), you lose access to tok->next.
-
-So you store tok->next in next before freeing the current node.
-
-Then move on to tok = next.*/
 void	free_tokenlist(t_token *tok)
 {
 	t_token	*next;

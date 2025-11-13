@@ -6,56 +6,29 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:52:49 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/04 16:15:17 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:27:19 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-char	*my_getenv(char **env, const char *name)
+char	*my_getenv(t_bash *bash_struct, const char *name)
 {
 	int		i;
 	size_t	len;
 
 	i = 0;
-	len = strlen(name);
-	while (env[i])
+	len = ft_strlen(name);
+	while (bash_struct->envp[i])
 	{
-		if (strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-			return (env[i] + len + 1); // return pointer to value
+		if (ft_strncmp(bash_struct->envp[i], name, len) == 0
+			&& bash_struct->envp[i][len] == '=')
+			return (bash_struct->envp[i] + len + 1);
 		i++;
 	}
 	return (NULL);
 }
-
-// char	**copy_env(char **envp)
-// {
-// 	int		i;
-// 	char	**copy;
-
-// 	i = 0;
-// 	while (envp[i])
-// 		i++;
-// 	copy = malloc(sizeof(char *) * (i + 1));
-// 	if (!copy)
-// 		return (NULL);
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		copy[i] = strdup(envp[i]);
-// 		if (!copy[i])
-// 		{
-// 			while (--i >= 0)
-// 				free(copy[i]);
-// 			free(copy);
-// 			return (NULL);
-// 		}
-// 		i++;
-// 	}
-// 	copy[i] = NULL;
-// 	return (copy);
-// }
 
 static char	*append_char(char *result, char c)
 {
@@ -69,7 +42,8 @@ static char	*append_char(char *result, char c)
 	return (new);
 }
 
-static char	*append_var_value(char *str, int *i, char *result, char **envp)
+static char	*append_var_value(char *str, int *i, char *result,
+		t_bash *bash_struct)
 {
 	int		start;
 	char	*var_name;
@@ -77,19 +51,32 @@ static char	*append_var_value(char *str, int *i, char *result, char **envp)
 	char	*tmp;
 
 	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	while (str[*i] && str[*i] != 32)
 		(*i)++;
 	var_name = ft_strndup(str + start, *i - start);
-	value = my_getenv(envp, var_name);
+	value = my_getenv(bash_struct, var_name);
 	free(var_name);
 	if (!value)
-		value = "";
+		return (result);
 	tmp = ft_strjoin(result, value);
 	free(result);
 	return (tmp);
 }
 
-char	*expand_variable(char *str, char **envp)
+static char	*qmark_gv(char *result, t_bash *bash_struct, int *i)
+{
+	char	*temp;
+	char	*exit_status;
+
+	exit_status = ft_itoa(bash_struct->last_exit_status);
+	temp = ft_strjoin(result, exit_status); // free temp??
+	free(exit_status);
+	result = temp;
+	(*i)++;
+	return (result);
+}
+
+char	*expand_variable(char *str, t_bash *bash_struct)
 {
 	int		i;
 	char	*result;
@@ -103,13 +90,15 @@ char	*expand_variable(char *str, char **envp)
 		if (str[i] == '$')
 		{
 			i++;
-			if (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
-				result = append_var_value(str, &i, result, envp);
+			if (str[i] == '?')
+				result = qmark_gv(result, bash_struct, &i);
+			else if (str[i])
+				result = append_var_value(str, &i, result, bash_struct);
 			else
 				result = append_char(result, '$');
 		}
 		else
 			result = append_char(result, str[i++]);
 	}
-	return (result);
+	return (result); // have to free later
 }

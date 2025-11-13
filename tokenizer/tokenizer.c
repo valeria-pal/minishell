@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/04 14:51:36 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:13:45 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,11 @@ static int	get_word_len(const char *line, int i)
 			i++;
 			len++;
 		}
-		if (!line[i]) //if unclosed we got to the end of null terminated string
-		//, so i is actualy NULL, hence error
-			return (-1);
 		len++;
 		return (len);
 	}
 	while (line[i] && !is_space(line[i]) && line[i] != '|' && line[i] != '<'
-		&& line[i] != '>')
+		&& line[i] != '>' && (line[i] != DQ && line[i] != SQ))
 	{
 		i++;
 		len++;
@@ -53,8 +50,7 @@ static t_toktype	get_token_type(const char *line, int i, int *len)
 	return (type);
 }
 
-int	process_token(const char *line, int *i, t_token **head,
-		t_token **tail)
+int	process_token(const char *line, int *i, t_token **head, t_token **tail)
 {
 	int			len;
 	int			start;
@@ -65,11 +61,6 @@ int	process_token(const char *line, int *i, t_token **head,
 	len = 0;
 	start = *i;
 	type = get_token_type(line, *i, &len);
-	if (len == -1)
-	{
-		printf("minishell: syntax error: unclosed quote\n");
-		return (0);
-	}
 	*i += len;
 	word = dup_str(line + start, len);
 	if (!word)
@@ -104,7 +95,7 @@ t_token	*tokenize(const char *line)
 	return (head);
 }
 
-void	tokenize_output(const char *line, char **envp)
+void	tokenize_output(const char *line, t_bash *bash_struct)
 {
 	t_token		*tokens;
 	t_command	*commands;
@@ -115,15 +106,21 @@ void	tokenize_output(const char *line, char **envp)
 		printf("Tokenization failed\n");
 		return ;
 	}
-	print_tokens(tokens);
-	commands = parse_pipeline(tokens, envp);
+	if (check_syntax_errors(tokens))
+	{
+		printf("Tokenization failed\n");
+		free_tokenlist(tokens);
+		return ;
+	}
+	print_tokens(tokens); // TO DO - убрать в самом конце
+	commands = parse_pipeline(tokens, bash_struct);
 	if (!commands)
 	{
 		printf("Parsing failed\n");
 		free_tokenlist(tokens);
 		return ;
 	}
-	print_commands(commands);
+	print_commands(commands); ////TO DO - убрать в самом конце
 	// potential exec(commands)
 	free_tokenlist(tokens);
 	free_commands(commands);

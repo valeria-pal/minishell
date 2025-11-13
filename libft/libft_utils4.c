@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   libft_utils4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:15:46 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/12 15:54:18 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/11/13 13:36:39 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/13 13:39:38 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-void	prompt(t_bash *bash_struct)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*line_read;
+	size_t			i;
+	unsigned char	*s1_copy;
+	unsigned char	*s2_copy;
 
-	while (1)
+	s1_copy = (unsigned char *)s1;
+	s2_copy = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (s1_copy[i] && s2_copy[i] && i < n)
 	{
-		line_read = readline("minishell$ ");
-		if (!line_read)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
-		if (*line_read)
-			add_history(line_read);
-		tokenize_output(line_read, bash_struct);
-		if (line_read)
-		{
-			free(line_read);
-			line_read = NULL;
-		}
+		if (s1_copy[i] < s2_copy[i])
+			return (s1_copy[i] - s2_copy[i]);
+		else if (s1_copy[i] > s2_copy[i])
+			return (s1_copy[i] - s2_copy[i]);
+		i++;
 	}
-	rl_clear_history();
+	if (i < n)
+		return (s1_copy[i] - s2_copy[i]);
+	return (0);
 }
