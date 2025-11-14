@@ -6,14 +6,14 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:41:58 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 12:14:11 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:51:35 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
 
-static char	*normalize_word(char *original_word, t_bash *bash_struct)
+char	*normalize_word(char *original_word, t_bash *bash_struct)
 {
 	if (original_word[0] == SQ)
 		return (strip_single_quotes(original_word));
@@ -24,7 +24,7 @@ static char	*normalize_word(char *original_word, t_bash *bash_struct)
 	return (ft_strdup(original_word));
 }
 
-static int	count_args_until_pipe(t_token *tok)
+int	count_args_until_pipe(t_token *tok)
 {
 	int	count;
 
@@ -42,7 +42,7 @@ static int	count_args_until_pipe(t_token *tok)
 	return (count);
 }
 
-static int	add_redirection(t_command *cmd, t_token **tok_ptr)
+int	add_redirection(t_command *cmd, t_token **tok_ptr)
 {
 	t_redir_type	rtype;
 	t_redirection	*redir_node;
@@ -63,43 +63,6 @@ static int	add_redirection(t_command *cmd, t_token **tok_ptr)
 		return (0);
 	*tok_ptr = tok->next;
 	return (1);
-}
-
-static t_command	*parse_one_command(t_token **tok_ptr, t_bash *bash_struct)
-{
-	t_command	*cmd;
-	t_token		*tok;
-	int			i;
-
-	cmd = cmd_new();
-	if (!cmd)
-		return (NULL);
-	if (count_args_until_pipe(*tok_ptr) > 0)
-	{
-		cmd->argv = malloc(sizeof(char *) * (count_args_until_pipe(*tok_ptr)
-					+ 1));
-		if (!cmd->argv)
-			return (free(cmd), NULL);
-	}
-	i = 0;
-	tok = *tok_ptr;
-	while (tok && tok->type != PIPE && tok->type != EOL)
-	{
-		if (tok->type == WORD)
-		{
-			cmd->argv[i] = normalize_word(tok->value, bash_struct);
-			if (!cmd->argv[i])
-				return (free_commands(cmd), NULL);
-			i++;
-			tok = tok->next;
-		}
-		else if (!add_redirection(cmd, &tok))
-			return (free_commands(cmd), NULL);
-	}
-	if (count_args_until_pipe(*tok_ptr) > 0)
-		cmd->argv[i] = NULL;
-	*tok_ptr = tok;
-	return (cmd);
 }
 
 t_command	*parse_pipeline(t_token *tokens, t_bash *bash_struct)

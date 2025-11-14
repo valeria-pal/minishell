@@ -6,30 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:29:37 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/10/29 21:23:48 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:42:53 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
-
-char	*dup_str(const char *s, size_t n)
-{
-	char	*str;
-	size_t	i;
-
-	str = (char *)malloc(n + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[n] = '\0';
-	return (str);
-}
 
 void	*ft_memset(void *s, int value, size_t n)
 {

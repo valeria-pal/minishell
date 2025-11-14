@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:52:49 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 15:27:19 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:43:23 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static char	*qmark_gv(char *result, t_bash *bash_struct, int *i)
 	exit_status = ft_itoa(bash_struct->last_exit_status);
 	temp = ft_strjoin(result, exit_status); // free temp??
 	free(exit_status);
+	free(result);
 	result = temp;
 	(*i)++;
 	return (result);

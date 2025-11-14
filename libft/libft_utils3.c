@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 12:35:45 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 16:24:11 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:43:10 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ char	*ft_itoa(int num)
 	i = 0;
 	if (n < 0 || count == 0)
 		count++;
-	if (!(dst = (char *)malloc((count + 1) * sizeof(char))))
-		return (NULL);
+	dst = (char *)malloc((count + 1) * sizeof(char));
 	if (n < 0)
 	{
 		n *= -1;

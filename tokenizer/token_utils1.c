@@ -6,12 +6,18 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:51:12 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/11 19:20:00 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:42:37 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../include/minishell.h"
+
+static t_toktype	heredoc(int *len)
+{
+	*len = 2;
+	return (HEREDOC);
+}
 
 t_toktype	get_operator_type(const char *s, int *len)
 {
@@ -21,10 +27,7 @@ t_toktype	get_operator_type(const char *s, int *len)
 		return (PIPE);
 	}
 	else if (s[0] == '<' && s[1] == '<')
-	{
-		*len = 2;
-		return (HEREDOC);
-	}
+		heredoc(len);
 	else if (s[0] == '<')
 	{
 		*len = 1;

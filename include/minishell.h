@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 16:15:57 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:54:15 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_command
 
 // Utils
 int								is_space(char c);
-char							*dup_str(const char *s, size_t n);
 void							*ft_memset(void *s, int value, size_t n);
 char							*ft_strdup(const char *s1);
 char							*ft_strndup(const char *s1, size_t n);
@@ -123,6 +122,13 @@ char							*strip_double_quotes_and_expand(char *str,
 char							*strip_single_quotes(char *str);
 int								has_dollar(char *str);
 int								check_syntax_errors(t_token *tokens);
+t_command						*parse_one_command(t_token **tok_ptr,
+									t_bash *bash_struct);
+char							*normalize_word(char *original_word,
+									t_bash *bash_struct);
+int								count_args_until_pipe(t_token *tok);
+int								add_redirection(t_command *cmd,
+									t_token **tok_ptr);
 
 // Expander
 char							*my_getenv(t_bash *bash_struct,

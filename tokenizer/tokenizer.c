@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 12:13:45 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:41:18 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int	process_token(const char *line, int *i, t_token **head, t_token **tail)
 	start = *i;
 	type = get_token_type(line, *i, &len);
 	*i += len;
-	word = dup_str(line + start, len);
+	word = ft_strndup(line + start, len);
 	if (!word)
 		return (0);
 	node = new_token(word, type);
 	if (!node || !append_token(head, tail, node))
-		return (0);
+		return (free(word), 0);
 	return (1);
 }
 
