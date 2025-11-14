@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 12:35:45 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 12:35:50 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:24:11 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ static int	count_size(int n)
 
 char	*ft_itoa(int num)
 {
-	char *dst;
-	int count;
-	int i;
-	long int n = num;
+	char		*dst;
+	int			count;
+	int			i;
+	long int	n;
 
+	n = num;
 	count = count_size(n);
 	i = 0;
 	if (n < 0 || count == 0)

@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 13:38:18 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:15:57 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ int								ft_isalpha(int c);
 int								ft_isalnum(char c);
 void							ft_putstr_fd(char *s, int fd);
 char							*ft_itoa(int num);
-int								ft_strncmp(const char *s1, const char *s2, size_t n);
+int								ft_strncmp(const char *s1, const char *s2,
+									size_t n);
 
 // Tokenizer
-int append_token(t_token **head, t_token **tail, t_token *node);
+int								append_token(t_token **head, t_token **tail,
+									t_token *node);
 t_token							*new_token(char *value, t_toktype type);
 int								add_eol_token(t_token **head, t_token **tail);
 void							free_tokenlist(t_token *tok);
