@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   libft_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:46:00 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 11:32:10 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/15 12:03:55 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../include/minishell.h"
 
 static size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -57,7 +57,7 @@ void	free_split(char **arr)
 	start = arr;
 	while (*arr)
 	{
-		free(*arr);int	is_space(char c);
+		free(*arr);
 		arr++;
 	}
 	free(start);
@@ -66,7 +66,7 @@ void	free_split(char **arr)
 static char	**fill_tokens(const char *s, char c, char **arr)
 {
 	const char	*start;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (*s)

@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:10:06 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 11:28:32 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/09/18 20:56:42 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/15 12:05:01 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
-
-void	print_tokens(t_token *t)
-{
-	while (t)
-	{
-		if (t->type == WORD)
-			printf("WORD: %s\n", t->value);
-		else if (t->type == EOL)
-			printf("EOL\n");
-		t = t->next;
-	}
-}
+#include "../include/minishell.h"
 
 int	append_token(t_token **head, t_token **tail, t_token *node)
 {
@@ -38,7 +26,7 @@ int	append_token(t_token **head, t_token **tail, t_token *node)
 
 void	free_tokenlist(t_token *tok)
 {
-	t_token *next;
+	t_token	*next;
 
 	while (tok)
 	{
@@ -48,4 +36,34 @@ void	free_tokenlist(t_token *tok)
 		free(tok);
 		tok = next;
 	}
+}
+
+t_token	*new_token(char *value, t_toktype type)
+{
+	t_token	*t;
+
+	t = (t_token *)malloc(sizeof(t_token));
+	if (!t)
+		return (NULL);
+	t->value = value;
+	t->type = type;
+	t->next = NULL;
+	return (t);
+}
+
+int	add_eol_token(t_token **head, t_token **tail)
+{
+	t_token	*eol;
+
+	eol = new_token(NULL, EOL);
+	if (!eol)
+		return (0);
+	return (append_token(head, tail, eol));
+}
+
+int	skip_spaces(const char *line, int i)
+{
+	while (line[i] && is_space(line[i]))
+		i++;
+	return (i);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:15:09 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 14:52:33 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/15 12:02:20 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../include/minishell.h"
 
 static char	*release_command_with_backslash_and_path(char *result,
 		char *cmd_with_backslash, char **start)
@@ -31,8 +31,8 @@ static char	*build_candidate_path(const char *cmd, const char *envp_path)
 	all_pathes_from_envp = ft_split(envp_path, ':');
 	start = all_pathes_from_envp;
 	if (!cmd_with_backslash || !all_pathes_from_envp)
-		return (release_command_with_backslash_and_path(NULL, cmd_with_backslash,
-				start));
+		return (release_command_with_backslash_and_path(NULL,
+				cmd_with_backslash, start));
 	while (*all_pathes_from_envp)
 	{
 		candidate_path = ft_strjoin(*all_pathes_from_envp, cmd_with_backslash);
@@ -66,5 +66,3 @@ char	*find_path(const char *cmd)
 	free(envp_path);
 	return (candidate_path);
 }
-
-

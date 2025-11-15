@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   libft_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/10/22 13:32:00 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/10/01 18:29:37 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/15 12:03:58 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../include/minishell.h"
 
 void	*ft_memset(void *s, int value, size_t n)
 {
@@ -32,21 +32,41 @@ int	is_space(char c)
 	return (c == ' ' || c == '\t');
 }
 
-char	*dup_str(const char *s, size_t n)
+char	*ft_strdup(const char *s1)
 {
-	char	*str;
-	size_t	i;
+	char	*ptr;
+	char	*p;
+	int		i;
 
-	str = (char *)malloc(n + 1);
-	if (!str)
+	ptr = malloc(ft_strlen(s1) + 1);
+	if (ptr == NULL)
 		return (NULL);
+	p = ptr;
 	i = 0;
-	while (i < n)
+	while (s1[i])
 	{
-		str[i] = s[i];
+		*p = s1[i];
+		p++;
 		i++;
 	}
-	str[n] = '\0';
-	return (str);
+	*p = '\0';
+	return (ptr);
 }
 
+char	*ft_strndup(const char *s1, size_t n)
+{
+	char	*s2;
+	size_t	i;
+
+	i = 0;
+	s2 = (char *)malloc(sizeof(char) * (n + 1));
+	if (!s2)
+		return (NULL);
+	while (s1[i] && i < n)
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}

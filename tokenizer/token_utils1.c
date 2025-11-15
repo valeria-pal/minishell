@@ -1,37 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   token_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:15:46 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/15 12:04:45 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/11/04 14:51:12 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/15 12:05:04 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	prompt(t_bash *bash_struct)
+static t_toktype	heredoc(int *len)
 {
-	char	*line_read;
+	*len = 2;
+	return (HEREDOC);
+}
 
-	while (1)
+t_toktype	get_operator_type(const char *s, int *len)
+{
+	if (s[0] == '|')
 	{
-		line_read = readline("minishell$ ");
-		if (!line_read)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
-		if (*line_read)
-			add_history(line_read);
-		tokenize_output(line_read, bash_struct);
-		if (line_read)
-		{
-			free(line_read);
-			line_read = NULL;
-		}
+		*len = 1;
+		return (PIPE);
 	}
-	rl_clear_history();
+	else if (s[0] == '<' && s[1] == '<')
+		heredoc(len);
+	else if (s[0] == '<')
+	{
+		*len = 1;
+		return (REDIR_IN);
+	}
+	else if (s[0] == '>' && s[1] == '>')
+	{
+		*len = 2;
+		return (REDIR_APPEND);
+	}
+	else if (s[0] == '>')
+	{
+		*len = 1;
+		return (REDIR_OUT);
+	}
+	return (WORD);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rl_utils.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/22 13:31:41 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 13:31:53 by vpaliash         ###   ########.fr       */
+/*   Created: 2025/09/08 09:40:32 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/15 12:04:52 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../include/minishell.h"
 
 void	rl_utils(void)
 {

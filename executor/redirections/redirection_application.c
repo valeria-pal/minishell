@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_application.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:27:31 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 14:56:36 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/15 12:02:58 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../include/minishell.h"
 
-int	apply_redirections_to_cmd( t_command *cmd)
+int	apply_redirections_to_cmd(t_command *cmd)
 {
 	t_redirection	*rd;
 
-	if (!cmd )
+	if (!cmd)
 		return (-1);
-		
 	rd = cmd->redirs;
 	while (rd)
 	{
@@ -31,9 +30,10 @@ int	apply_redirections_to_cmd( t_command *cmd)
 
 int	apply_all_redirections(t_command *head)
 {
+	t_command	*cmd;
+
 	if (!head)
 		return (-1);
-	t_command *cmd;
 	cmd = head;
 	while (cmd)
 	{

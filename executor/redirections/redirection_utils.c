@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:28:07 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/10/22 20:22:00 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/15 12:03:05 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../include/minishell.h"
 
 static int	apply_rd_in(t_redirection *rd)
 {
