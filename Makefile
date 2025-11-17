@@ -1,9 +1,11 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-IFLAG =  -Iinclude
-LDFLAGS = -lreadline
+#CFLAGS = -Wall -Wextra -Werror\
+IFLAG =  -Iinclude\
+LDFLAGS = -lreadline\#
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 
-#executor/redirections/pipelines/pipes.c \#
+#executor/redirections/pipelines/pipes.c
 SRC = src/main.c \
 	  src/utils.c \
 	  src/signals.c \
@@ -22,6 +24,7 @@ SRC = src/main.c \
 	  parcer/quotes_and_expand.c\
 	  parcer/parse_1cm_utils.c\
 	  parcer/syntax_errors.c\
+	  parcer/heredoc.c\
 	  libft/libft_utils1.c\
 	  libft/libft_utils2.c\
 	  libft/libft_itoa.c\

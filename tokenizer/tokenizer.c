@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 09:40:48 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/15 13:11:43 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:30:46 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,14 @@ void	tokenize_output(const char *line, t_bash *bash_struct)
 		free_tokenlist(tokens);
 		return ;
 	}
-	//print_tokens(tokens); // TO DO - убрать в самом конце
+	print_tokens(tokens); // TO DO - убрать в самом конце
 	commands = parse_pipeline(tokens, bash_struct);
 	if (!commands)
 	{
 		free_tokenlist(tokens);
 		return ;
 	}
-	//print_commands(commands); ////TO DO - убрать в самом конце
+	print_commands(commands); ////TO DO - убрать в самом конце
 	execute(commands, bash_struct);
 	free_tokenlist(tokens);
 	free_commands(commands);
