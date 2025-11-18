@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:28:07 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/18 14:28:28 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:05:41 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,27 @@ static int	apply_rd_append(t_redirection *rd)
 	return (0);
 }
 
-static int	apply_heredoc(t_redirection *rd)
-{
-	int	fd;
+// static int	apply_heredoc(t_redirection *rd)
+// {
+// 	int	fd;
 
-	fd = open(rd->filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror(rd->filename);
-		return (-1);
-	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		perror("dup2 heredoc");
-		close(fd);
-		return (-1);
-	}
-	close(fd);
-	unlink(rd->filename); // delete temporary heredoc file safely
-	return (0);
-}
+// 	fd = open(rd->filename, O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror(rd->filename);
+// 		return (-1);
+// 	}
+// 	if (dup2(fd, STDIN_FILENO) < 0)
+// 	{
+// 		perror("dup2 heredoc");
+// 		close(fd);
+// 		return (-1);
+// 	}
+// 	close(fd);
+// 	unlink(rd->filename); // delete temporary heredoc file safely
+// 	return (0);
+// }
+
 // int	apply_heredoc(t_redirection *rd)
 // {
 // 	int	fd;
@@ -106,10 +107,51 @@ static int	apply_heredoc(t_redirection *rd)
 // 	return (0);
 // }
 
+// int	apply_redirect(t_redirection *rd)
+// {
+// 	if (!rd || !rd->filename)
+// 		return (-1);
+// 	if (rd->type == R_IN)
+// 		return (apply_rd_in(rd));
+// 	else if (rd->type == R_OUT)
+// 		return (apply_rd_out(rd));
+// 	else if (rd->type == R_APPEND)
+// 		return (apply_rd_append(rd));
+// 	else if (rd->type == R_HEREDOC)
+// 		return (apply_heredoc(rd));
+// 	perror("unknown redirection type");
+// 	return (-1);
+// }
+
+static int	apply_heredoc(t_redirection *rd)
+{
+	int	fd;
+	int	ret;
+
+	if (!rd || !rd->filename)
+		return (-1);
+	fd = open(rd->filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror(rd->filename);
+		return (-1);
+	}
+	ret = dup2(fd, STDIN_FILENO);
+	close(fd);
+	if (ret < 0)
+	{
+		perror("dup2 heredoc");
+		return (-1);
+	}
+	// Clean up the temporary file
+	unlink(rd->filename);
+	return (0);
+}
 int	apply_redirect(t_redirection *rd)
 {
 	if (!rd || !rd->filename)
 		return (-1);
+
 	if (rd->type == R_IN)
 		return (apply_rd_in(rd));
 	else if (rd->type == R_OUT)
@@ -118,6 +160,7 @@ int	apply_redirect(t_redirection *rd)
 		return (apply_rd_append(rd));
 	else if (rd->type == R_HEREDOC)
 		return (apply_heredoc(rd));
-	perror("unknown redirection type");
+
+	ft_putstr_fd("minishell: unknown redirection type\n", 2);
 	return (-1);
 }
