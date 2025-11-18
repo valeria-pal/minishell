@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:41:58 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/18 14:28:45 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:30:31 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,6 @@ int	count_args_until_pipe(t_token *tok)
 	return (count);
 }
 
-int	add_redirection(t_command *cmd, t_token **tok_ptr)
-{
-	t_redir_type	rtype;
-	t_redirection	*redir_node;
-	t_token			*tok;
-
-	tok = *tok_ptr;
-	if (tok->type == REDIR_IN)
-		rtype = R_IN;
-	else if (tok->type == REDIR_OUT)
-		rtype = R_OUT;
-	else if (tok->type == REDIR_APPEND)
-		rtype = R_APPEND;
-	else
-		rtype = R_HEREDOC;
-	tok = tok->next;
-	redir_node = new_redirection(rtype, tok->value);
-	if (!append_redirection(&cmd->redirs, redir_node))
-		return (0);
-	*tok_ptr = tok->next;
-	return (1);
-}
-
 // int	add_redirection(t_command *cmd, t_token **tok_ptr)
 // {
 // 	t_redir_type	rtype;
@@ -71,8 +48,6 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 // 	t_token			*tok;
 
 // 	tok = *tok_ptr;
-// 	if (tok->type == HEREDOC)
-// 		return (add_heredoc_redir(cmd, tok_ptr));
 // 	if (tok->type == REDIR_IN)
 // 		rtype = R_IN;
 // 	else if (tok->type == REDIR_OUT)
@@ -80,14 +55,39 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 // 	else if (tok->type == REDIR_APPEND)
 // 		rtype = R_APPEND;
 // 	else
-// 		return (0);
+// 		rtype = R_HEREDOC;
 // 	tok = tok->next;
-// 	redir_node = new_redirection(rtype, ft_strdup(tok->value));
-// 	if (!redir_node || !append_redirection(&cmd->redirs, redir_node))
+// 	redir_node = new_redirection(rtype, tok->value);
+// 	if (!append_redirection(&cmd->redirs, redir_node))
 // 		return (0);
 // 	*tok_ptr = tok->next;
 // 	return (1);
 // }
+
+int	add_redirection(t_command *cmd, t_token **tok_ptr)
+{
+	t_redir_type	rtype;
+	t_redirection	*redir_node;
+	t_token			*tok;
+
+	tok = *tok_ptr;
+	if (tok->type == HEREDOC)
+		return (add_heredoc_redir(cmd, tok_ptr));
+	if (tok->type == REDIR_IN)
+		rtype = R_IN;
+	else if (tok->type == REDIR_OUT)
+		rtype = R_OUT;
+	else if (tok->type == REDIR_APPEND)
+		rtype = R_APPEND;
+	else
+		return (0);
+	tok = tok->next;
+	redir_node = new_redirection(rtype, ft_strdup(tok->value));
+	if (!redir_node || !append_redirection(&cmd->redirs, redir_node))
+		return (0);
+	*tok_ptr = tok->next;
+	return (1);
+}
 
 t_command	*parse_pipeline(t_token *tokens, t_bash *bash_struct)
 {
