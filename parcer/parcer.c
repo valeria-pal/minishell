@@ -66,7 +66,6 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	return (1);
 }
 
-
 t_command	*parse_pipeline(t_token *tokens, t_bash *bash_struct)
 {
 	t_command	*head;
