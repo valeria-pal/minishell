@@ -26,7 +26,7 @@ t_toktype	get_operator_type(const char *s, int *len)
 		return (PIPE);
 	}
 	else if (s[0] == '<' && s[1] == '<')
-		heredoc_tok(len);
+		return (heredoc_tok(len));
 	else if (s[0] == '<')
 	{
 		*len = 1;

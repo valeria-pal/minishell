@@ -154,9 +154,7 @@ int								add_heredoc_redir(t_command *cmd,
 									t_token **tok_ptr);
 void							child_heredoc(char *delimiter, int fd);
 int								parent_heredoc(pid_t pid, int fd);
-
-int								heredoc(char *delimiter);
-int heredoc_create(char *delimiter, char *outfile);
+int								heredoc_create(char *delimiter, char *outfile);
 
 // Expander
 char *my_getenv(t_bash *bash_struct, const char *name);
