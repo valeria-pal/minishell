@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 14:21:54 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/20 18:54:48 by marvin           ###   ########.fr       */
+/*   Updated: 2025/11/20 19:14:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static pid_t	launch_command(t_command *cmd, int i, int cmd_count,
 		if (pipe_count > 0)
 			setup_pipes_for_child(i, cmd_count, pipes, pipe_count);
 		close_pipes(pipes, pipe_count);
-		if (apply_all_redirections(cmd) < 0)
+		if (apply_redirections_to_cmd(cmd) < 0)
 			exit(EXIT_FAILURE);
 		execve(cmd->argv[0], cmd->argv, envp);
 		perror("execve");

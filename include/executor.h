@@ -72,7 +72,6 @@ int								execute(t_command *cmd, char *const envp[]);
 // Redirections
 int								apply_redirect(t_redirection *rd);
 int								apply_redirections_to_cmd(t_command *cmd);
-int								apply_all_redirections(t_command *head);
 
 
 // Utils
