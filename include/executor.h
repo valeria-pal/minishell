@@ -94,6 +94,14 @@ void							setup_signals(void);
 void							set_termios(void);
 
 
+//Pipes
+int	count_cmds(t_command *cmd);
+void	close_pipes(int pipe_fds[][2], int pipe_count);
+void	pipe_error_check(int pipe_fds[][2], int i);
+int	(*create_pipes(t_command *cmd))[2];
+pid_t	*allocate_pids(int cmd_count, int (*pipes)[2];);
+void	execute_pipeline(t_command *cmd, char **envp)
+
 // Prompt
 void	prompt(void);
 
