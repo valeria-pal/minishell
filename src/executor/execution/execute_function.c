@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 10:55:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/21 01:46:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/11/21 02:47:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void execute(t_command *cmd, t_bash *bash)
 	
 	if (!cmd )
 		return;
-	if (cmd_count == 1 && cmd->argv && cmd->argv[0] && exec_builtin(cmd, bash) != -1)
-		return;
+	//if (cmd_count == 1 && cmd->argv && cmd->argv[0] && exec_builtin(cmd, bash) != -1)
+	//	return;
 	if (cmd_count == 1)
 		execute_one_cmd(cmd, bash);
 	else
