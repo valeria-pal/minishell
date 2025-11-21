@@ -6,15 +6,15 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 14:21:54 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/20 19:14:17 by marvin           ###   ########.fr       */
+/*   Updated: 2025/11/21 02:14:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static 	setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2], int pipe_count)
+static void	setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2], int pipe_count)
 {
-	if (pipe_count <= 0)
+	if (pipe_count <= 0 || pipes == NULL)
 		return;
 	
 	if (i > 0) // if not first read from previous pipe
@@ -35,51 +35,61 @@ static 	setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2], int pipe_co
 	}
 }
 
-static pid_t	launch_command(t_command *cmd, int i, int cmd_count,
-			int (*pipes)[2], int pipe_count, char **envp)
+static pid_t	launch_command(t_command *cmd, int i, int cmd_count, int (*pipes)[2], int pipe_count, t_bash *bash)
 {
 	pid_t	pid;
+	char * path ;
 
 	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+	check_fork_error(pid);
 	if (pid == 0)
 	{
-		if (pipe_count > 0)
-			setup_pipes_for_child(i, cmd_count, pipes, pipe_count);
-		close_pipes(pipes, pipe_count);
-		if (apply_redirections_to_cmd(cmd) < 0)
-			exit(EXIT_FAILURE);
-		execve(cmd->argv[0], cmd->argv, envp);
-		perror("execve");
+		setup_child_signals();
+		path = find_path(cmd->argv[0]);
+		if (!path)
+	{
+		print_command_not_found(cmd,bash);
 		exit(127);
+	}
+	handle_redirections_or_exit(cmd, path);
+		if (pipe_count > 0  && pipes != NULL)
+			setup_pipes_for_child(i, cmd_count, pipes, pipe_count);
+		if (pipe_count > 0 && pipes != NULL)
+			close_pipes(pipes, pipe_count);
+		execve(path, cmd->argv, bash->envp);
+		perror("execve");
+		free(path);
+		errno_checker();
 	}
 	return (pid);
 }
 
-static void	wait_for_all_children(pid_t *pids, int cmd_count)
+static int	wait_for_all_children(pid_t *pids, int cmd_count)
 {
 	int	i;
 	int	status;
+	int last_status;
 
 	i = 0;
+	last_status = 0;
 	while (i < cmd_count)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
 			perror("waitpid");
+		else
+			last_status = decode_errors(status);
 		i++;
 	}
+	return last_status;
 }
 
-static static void	run_pipeline_and_wait(t_command *cmd, int cmd_count,
-				int (*pipes)[2], int pipe_count, char **envp)
+static void	run_pipeline_and_wait(t_command *cmd, int cmd_count,
+				int (*pipes)[2], int pipe_count,  t_bash *bash)
 {
 	pid_t		*pids;
 	t_command	*current;
 	int			i;
+	int status;
 
 	pids = allocate_pids(cmd_count, pipes);
 	current = cmd;
@@ -87,22 +97,22 @@ static static void	run_pipeline_and_wait(t_command *cmd, int cmd_count,
 	while (i < cmd_count && current)
 	{
 		pids[i] = launch_command(current, i, cmd_count,
-				pipes, pipe_count, envp);
+				pipes, pipe_count, bash);
 		current = current->next;
 		i++;
 	}
-	if (pipe_count > 0)
+	if (pipe_count > 0 && pipes != NULL)
 	{
 		close_pipes(pipes, pipe_count);
 		free(pipes);
 	}
-	i = 0;
-	wait_for_all_children(pids, cmd_count);
-
+	status = wait_for_all_children(pids, cmd_count);
 	free(pids);
+	bash->last_exit_status = status;
 }
 
-void	execute_pipeline(t_command *cmd, char **envp)
+
+void	execute_pipeline(t_command *cmd,  t_bash *bash)
 {
 	int		(*pipes)[2];
 	int		cmd_count;
@@ -115,7 +125,7 @@ void	execute_pipeline(t_command *cmd, char **envp)
 	pipes = NULL;
 	if (pipe_count > 0)
 		pipes = create_pipes(cmd);
-	run_pipeline_and_wait(cmd, cmd_count, pipes, pipe_count, envp);
+	run_pipeline_and_wait(cmd, cmd_count, pipes, pipe_count, bash);
 }
 
 

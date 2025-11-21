@@ -3,19 +3,18 @@ CFLAGS = -Wall -Wextra -Werror
 IFLAG =  -Iinclude
 LDFLAGS = -lreadline
 SRC =\
-	src/main.c \
-	src/prompt.c \
-	src/tokenizer.c \
-	src/token_utils.c \
-	src/executor/execute_function.c \
-	src/executor/executor_utils/executor_utils.c \
-	src/executor/executor_utils/rl_utils.c \
-	src/string_utils/split.c \
-	src/string_utils/string_utils.c \
-	src/string_utils/utils.c \
-	src/executor/signals/signals.c \
-	src/executor/redirections/redirection_application.c \
-	src/executor/redirections/redirection_utils.c \
+	SRCS := main.c \
+        executor/execute_functions.c \
+        executor/executor_utils.c \
+        executor/execution/execution.c \
+        executor/builtins/execute_builtins.c \
+        executor/pipelines/pipeline_executor.c \
+        executor/pipelines/error_checkers.c \
+        executor/pipelines/pipes_utils.c \
+        executor/redirections/redirection_application.c \
+        executor/redirections/redirection_utils.c \
+        signals/signals.c \
+        string_utils/string_utils.c \
  
 OBJ = $(SRC:.c=.o)
 NAME = minishell

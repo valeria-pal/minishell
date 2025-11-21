@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:05:14 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/25 15:36:47 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/20 23:35:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+
+int ft_strcmp(const char *str1, const char *str2) {
+    while (*str1 != '\0' && *str2 != '\0' && *str1 == *str2)
+        str1++, str2++;
+    return (*str1 - *str2);
+}
 
 size_t	ft_strlen(const char *str)
 {

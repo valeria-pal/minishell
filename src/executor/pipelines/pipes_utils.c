@@ -38,16 +38,6 @@ void	close_pipes(int pipe_fds[][2], int pipe_count)
 	}
 }
 
-void	pipe_error_check(int pipe_fds[][2], int i)
-{
-	if (pipe(pipe_fds[i]) == -1)
-	{
-		perror("pipe");
-		close_pipes(pipe_fds, i);
-		free(pipe_fds);
-		exit(EXIT_FAILURE);
-	}
-}
 
 int	(*create_pipes(t_command *cmd))[2]
 {
@@ -76,13 +66,18 @@ int	(*create_pipes(t_command *cmd))[2]
 pid_t	*allocate_pids(int cmd_count, int (*pipes)[2])
 {
 	pid_t	*pids;
+	int pipe_count;
 
+	pipe_count = cmd_count - 1;
 	pids = malloc(cmd_count * sizeof(pid_t));
 	if (!pids)
 	{
 		perror("malloc");
 		if (pipes)
+		{
+			close_pipes(pipes, pipe_count);
 			free(pipes);
+		}
 		exit(EXIT_FAILURE);
 	}
 	return (pids);
