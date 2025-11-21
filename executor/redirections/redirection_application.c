@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:27:31 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/15 12:02:58 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:20:30 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ int	apply_redirections_to_cmd(t_command *cmd)
 	return (0);
 }
 
-int	apply_all_redirections(t_command *head)
-{
-	t_command	*cmd;
+// int	apply_all_redirections(t_command *head)
+// {
+// 	t_command	*cmd;
 
-	if (!head)
-		return (-1);
-	cmd = head;
-	while (cmd)
-	{
-		if (apply_redirections_to_cmd(cmd) < 0)
-			return (-1);
-		cmd = cmd->next;
-	}
-	return (0);
-}
+// 	if (!head)
+// 		return (-1);
+// 	cmd = head;
+// 	while (cmd)
+// 	{
+// 		if (apply_redirections_to_cmd(cmd) < 0)
+// 			return (-1);
+// 		cmd = cmd->next;
+// 	}
+// 	return (0);
+// }

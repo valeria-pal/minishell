@@ -1,19 +1,22 @@
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror\
-IFLAG =  -Iinclude\
-LDFLAGS = -lreadline\#
-CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
-LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+CFLAGS = -Wall -Wextra -Werror
+IFLAG =  -Iinclude
+LDFLAGS = -lreadline
 
-#executor/redirections/pipelines/pipes.c
-SRC = src/main.c \
+
+
+SRC = \
+	  src/main.c \
 	  src/utils.c \
 	  src/signals.c \
 	  src/prompt.c \
-	  executor/execute_function.c \
-	  executor/executor_utils/executor_utils.c \
+	  executor/execution/execute_function.c \
+	  executor/execution/executor_utils.c \
 	  executor/redirections/redirection_application.c \
 	  executor/redirections/redirection_utils.c \
+	  executor/pipelines/pipeline_execution.c\
+	  executor/pipelines/error_checkers.c\
+	  executor/pipelines/pipes_utils.c\
 	  tokenizer/token_utils.c \
 	  tokenizer/tokenizer.c \
 	  tokenizer/token_utils1.c\

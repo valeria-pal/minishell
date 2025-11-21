@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/17 22:45:02 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:56:56 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,28 @@ int								ft_strcmp(char *s1, char *s2);
 
 // Executor API
 char							*find_path(const char *cmd);
-int								execute(t_command *cmd, t_bash *bash_struct);
+void execute(t_command *cmd, t_bash *bash);
+void	execute_one_cmd(t_command *cmd, t_bash *bash );
+int	decode_errors(int status);
+void	handle_redirections_or_exit(t_command *cmd, char *path);
+void check_fork_error(pid_t pid);
+void errno_checker();
+void	pipe_error_check(int pipe_fds[][2], int i);
+void	execute_pipeline(t_command *cmd,  t_bash *bash);
+pid_t	*allocate_pids(int cmd_count, int (*pipes)[2]);
+int	(*create_pipes(t_command *cmd))[2];
+void	close_pipes(int pipe_fds[][2], int pipe_count);
+int	count_cmds(t_command *cmd);
+void print_command_not_found(t_command *cmd, t_bash *bash);
+void setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2], int pipe_count);
+void setup_child_signals(void);
+
+
 
 // Redirections
 int								apply_redirect(t_redirection *rd);
 int								apply_redirections_to_cmd(t_command *cmd);
-int								apply_all_redirections(t_command *head);
+//int								apply_all_redirections(t_command *head);
 
 // Tokenizer
 int								append_token(t_token **head, t_token **tail,
