@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:23:47 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/17 13:15:47 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:56:34 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,19 @@ void	setup_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }
+
+void setup_child_signals(void)
+{
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+}
+
 void	set_termios(void)
 {
 	struct termios	term;
+
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
-		return;
+		return ;
 	term.c_lflag = term.c_lflag & ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }

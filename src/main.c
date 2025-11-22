@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpaliash <vpaliash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:13:18 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/09/17 13:18:41 by vpaliash         ###   ########.fr       */
+/*   Updated: 2025/11/15 12:04:42 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	t_bash	bash_struct;
+
+	(void)argv;
+	bash_struct.envp = envp;
+	bash_struct.last_exit_status = 0;
+	if (argc != 1)
+		return (ft_putstr_fd("Incorrect arguments count!\n", 2), 1);
 	set_termios();
 	setup_signals();
-	prompt();
+	prompt(&bash_struct);
 	return (0);
 }

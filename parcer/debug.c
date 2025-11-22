@@ -1,37 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 12:15:46 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/15 12:04:45 by vpozniak         ###   ########.fr       */
+/*   Created: 2025/09/25 11:34:07 by vpozniak          #+#    #+#             */
+/*   Updated: 2025/11/15 12:04:16 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	prompt(t_bash *bash_struct)
+void	print_commands(t_command *cmd)
 {
-	char	*line_read;
+	int				c;
+	t_redirection	*r;
+	int				i;
 
-	while (1)
+	c = 0;
+	while (cmd)
 	{
-		line_read = readline("minishell$ ");
-		if (!line_read)
+		printf("Command %d:\n", c++);
+		printf("  argv: ");
+		if (cmd->argv)
 		{
-			write(1, "exit\n", 5);
-			break ;
+			i = 0;
+			while (cmd->argv[i])
+			{
+				printf("%s\n", cmd->argv[i]);
+				i++;
+			}
 		}
-		if (*line_read)
-			add_history(line_read);
-		tokenize_output(line_read, bash_struct);
-		if (line_read)
+		printf("\n");
+		printf("  redirs: ");
+		r = cmd->redirs;
+		while (r)
 		{
-			free(line_read);
-			line_read = NULL;
+			printf("%d, %s ", r->type, r->filename);
+			r = r->next;
 		}
+		printf("\n");
+		cmd = cmd->next;
 	}
-	rl_clear_history();
 }

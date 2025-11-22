@@ -1,14 +1,41 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+IFLAG =  -Iinclude
 LDFLAGS = -lreadline
-SRC = src/main.c \
+
+
+
+SRC = \
+	  src/main.c \
 	  src/utils.c \
-	  src/tokenizer.c \
 	  src/signals.c \
 	  src/prompt.c \
-	  src/token_utils.c \
+	  executor/execution/execute_function.c \
+	  executor/execution/executor_utils.c \
+	  executor/redirections/redirection_application.c \
+	  executor/redirections/redirection_utils.c \
+	  executor/pipelines/pipeline_execution.c\
+	  executor/pipelines/error_checkers.c\
+	  executor/pipelines/pipes_utils.c\
+	  tokenizer/token_utils.c \
+	  tokenizer/tokenizer.c \
+	  tokenizer/token_utils1.c\
+	  tokenizer/debug.c\
+	  parcer/parcer.c\
+	  parcer/debug.c\
+	  parcer/par_utils.c\
+	  parcer/quotes_and_expand.c\
+	  parcer/parse_1cm_utils.c\
+	  parcer/syntax_errors.c\
+	  parcer/heredoc.c\
+	  libft/libft_utils1.c\
+	  libft/libft_utils2.c\
+	  libft/libft_itoa.c\
+	  libft/libft_utils3.c\
+	  libft/libft_split.c\
+	  expander/exp_utils.c\
 
-	  
+
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 RM = rm -f
