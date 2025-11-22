@@ -1,0 +1,6 @@
+{
+	ignore_lireadline_leaks
+	Memcheck:Leak
+	...
+	obj:*/libreadline.so.*
+}

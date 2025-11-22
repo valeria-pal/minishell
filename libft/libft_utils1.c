@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:29:37 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/15 12:03:58 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/17 22:05:23 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,16 @@ char	*ft_strndup(const char *s1, size_t n)
 	}
 	s2[i] = '\0';
 	return (s2);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	if (!s1 || !s2)
+		return (-1);
+	while (*s1 == *s2 && *s1 && *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }

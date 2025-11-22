@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:28:07 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/15 12:03:05 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:58:22 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ int	apply_redirect(t_redirection *rd)
 		return (apply_rd_append(rd));
 	else if (rd->type == R_HEREDOC)
 		return (apply_heredoc(rd));
-	perror("unknown redirection type");
+	ft_putstr_fd("minishell: unknown redirection type\n", 2);
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:41:58 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/15 12:04:23 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:58:15 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	t_token			*tok;
 
 	tok = *tok_ptr;
+	if (tok->type == HEREDOC)
+		return (add_heredoc_redir(cmd, tok_ptr));
 	if (tok->type == REDIR_IN)
 		rtype = R_IN;
 	else if (tok->type == REDIR_OUT)
@@ -55,10 +57,10 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	else if (tok->type == REDIR_APPEND)
 		rtype = R_APPEND;
 	else
-		rtype = R_HEREDOC;
+		return (0);
 	tok = tok->next;
-	redir_node = new_redirection(rtype, tok->value);
-	if (!append_redirection(&cmd->redirs, redir_node))
+	redir_node = new_redirection(rtype, ft_strdup(tok->value));
+	if (!redir_node || !append_redirection(&cmd->redirs, redir_node))
 		return (0);
 	*tok_ptr = tok->next;
 	return (1);
