@@ -6,25 +6,28 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 11:41:58 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 17:36:22 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:48:27 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 char	*normalize_word(char *original_word, t_bash *bash_struct)
 {
+	char	*dup;
+	char	*result;
+
 	if (original_word[0] == SQ)
 		return (strip_single_quotes(original_word));
 	if (original_word[0] == DQ)
 		return (strip_double_quotes_and_expand(original_word, bash_struct));
 	if (has_dollar(original_word))
 	{
-		char *dup = ft_strdup(original_word);
-		char *result = expand_variable(dup, bash_struct);
+		dup = ft_strdup(original_word);
+		result = expand_variable(dup, bash_struct);
 		free(dup);
-		return result;
+		return (result);
 	}
 	return (ft_strdup(original_word));
 }
@@ -40,7 +43,6 @@ int	count_args_until_pipe(t_token *tok)
 			count++;
 		else if (tok->type == REDIR_IN || tok->type == REDIR_OUT
 			|| tok->type == REDIR_APPEND || tok->type == HEREDOC)
-			// TODO check if works with only else
 			tok = tok->next;
 		tok = tok->next;
 	}
@@ -63,7 +65,7 @@ int	add_redirection(t_command *cmd, t_token **tok_ptr)
 	else if (tok->type == REDIR_APPEND)
 		rtype = R_APPEND;
 	else
-		return(0);
+		return (0);
 	tok = tok->next;
 	redir_node = new_redirection(rtype, tok->value);
 	if (!append_redirection(&cmd->redirs, redir_node))

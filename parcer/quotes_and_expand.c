@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 15:21:53 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/13 12:15:07 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:49:02 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*strip_double_quotes_and_expand(char *str, t_bash *bash_struct)
 	inside = ft_strndup(str + 1, len - 2);
 	if (!inside)
 		return (NULL);
-	expanded = expand_variable(inside, bash_struct); // TO DO free later ????
+	expanded = expand_variable(inside, bash_struct);
 	free(inside);
 	return (expanded);
 }
@@ -33,7 +33,7 @@ char	*strip_single_quotes(char *str)
 	size_t	len;
 
 	len = ft_strlen(str);
-	return (ft_strndup(str + 1, len - 2)); // TO DO free later ????
+	return (ft_strndup(str + 1, len - 2));
 }
 
 int	has_dollar(char *str)

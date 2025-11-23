@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 17:32:48 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:44:00 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void							execute_pipeline(t_command *cmd, t_bash *bash);
 void							print_command_not_found(t_command *cmd,
 									t_bash *bash);
 int								decode_errors(int status);
-void execute(t_command *cmd, t_bash *bash);
+void							execute(t_command *cmd, t_bash *bash);
 
 // Parcer
 t_redirection					*new_redirection(t_redir_type type,
@@ -154,7 +154,8 @@ char							*normalize_word(char *original_word,
 int								count_args_until_pipe(t_token *tok);
 int								add_redirection(t_command *cmd,
 									t_token **tok_ptr);
-int								add_heredoc_redir(t_command *cmd, t_token **tok_ptr);
+int								add_heredoc_redir(t_command *cmd,
+									t_token **tok_ptr);
 int								heredoc(char *delimiter);
 
 // Expander

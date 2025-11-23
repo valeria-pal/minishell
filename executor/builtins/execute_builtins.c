@@ -6,17 +6,18 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 23:07:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/11/23 11:48:18 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:34:33 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 int	exec_builtin(t_command *cmd, t_bash *bash)
 {
 	int	status;
-  if  (!cmd || !cmd->argv || !cmd->argv[0])
+
+	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return (-1);
 	if (ft_strcmp(cmd->argv[0], "echo") == 0)
 		status = builtin_echo(cmd->argv);

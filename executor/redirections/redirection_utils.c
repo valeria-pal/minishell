@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:28:07 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/23 11:48:42 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:47:18 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	apply_heredoc(t_redirection *rd)
 		return (-1);
 	}
 	close(fd);
-	unlink(rd->filename); // delete temporary heredoc file safely
+	unlink(rd->filename);
 	return (0);
 }
 

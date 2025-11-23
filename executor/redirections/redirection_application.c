@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:27:31 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/23 11:48:47 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:47:46 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int	apply_redirections_to_cmd( t_command *cmd)
 {
 	t_redirection	*rd;
 
-	if (!cmd )
+	if (!cmd)
 		return (-1);
-
 	rd = cmd->redirs;
 	while (rd)
 	{

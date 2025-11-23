@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:08:13 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/12 12:20:17 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:48:50 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	check_redirection_errors(t_token *tok)
 				|| tok->type == REDIR_APPEND || tok->type == HEREDOC))
 		{
 			if (!tok->next || tok->next->type != WORD)
-			// или если предыдузуее не слово
 			{
 				if (tok->next && tok->next->value)
 					return (error_message("redirection"));
@@ -97,6 +96,5 @@ int	check_syntax_errors(t_token *tokens)
 		return (1);
 	if (check_unclosed_quotes(tokens))
 		return (1);
-	// potential check for nonsense word tokens
 	return (0);
 }

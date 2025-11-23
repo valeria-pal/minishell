@@ -6,12 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:15:09 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/23 11:48:28 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:46:27 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 static char	*release_command_with_backslash_and_path(char *result,
 		char *cmd_with_backslash, char **start)
@@ -32,8 +32,8 @@ static char	*build_candidate_path(const char *cmd, const char *envp_path)
 	all_pathes_from_envp = ft_split(envp_path, ':');
 	start = all_pathes_from_envp;
 	if (!cmd_with_backslash || !all_pathes_from_envp)
-		return (release_command_with_backslash_and_path(NULL, cmd_with_backslash,
-				start));
+		return (release_command_with_backslash_and_path(NULL,
+				cmd_with_backslash, start));
 	while (*all_pathes_from_envp)
 	{
 		candidate_path = ft_strjoin(*all_pathes_from_envp, cmd_with_backslash);
@@ -60,12 +60,9 @@ char	*find_path(const char *cmd)
 	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	envp_path = ft_strdup(getenv("PATH"));
-	// it is important to make a copy because then it can be modified with built in commands
 	if (!envp_path)
 		return (NULL);
 	candidate_path = build_candidate_path(cmd, envp_path);
 	free(envp_path);
 	return (candidate_path);
 }
-
-

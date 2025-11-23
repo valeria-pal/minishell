@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:36:39 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 12:21:18 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:15:53 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		return (s1_copy[i] - s2_copy[i]);
 	return (0);
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {

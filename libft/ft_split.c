@@ -6,12 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 11:54:43 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 11:55:05 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:20:59 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 static size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -58,7 +58,7 @@ void	free_split(char **arr)
 	start = arr;
 	while (*arr)
 	{
-		free(*arr);int	is_space(char c);
+		free(*arr);
 		arr++;
 	}
 	free(start);
@@ -67,7 +67,7 @@ void	free_split(char **arr)
 static char	**fill_tokens(const char *s, char c, char **arr)
 {
 	const char	*start;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (*s)

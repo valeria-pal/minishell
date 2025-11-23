@@ -6,12 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:23:47 by vpaliash          #+#    #+#             */
-/*   Updated: 2025/11/23 11:51:05 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:42:40 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 volatile sig_atomic_t	g_sig = 0;
 
@@ -42,10 +42,10 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void setup_child_signals(void)
+void	setup_child_signals(void)
 {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	set_termios(void)

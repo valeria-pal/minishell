@@ -6,12 +6,12 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 17:31:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/11/23 11:48:38 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:45:41 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../include/minishell.h"
+#include <stdio.h>
 
 int	count_cmds(t_command *cmd)
 {
@@ -28,7 +28,7 @@ int	count_cmds(t_command *cmd)
 
 void	close_pipes(int pipe_fds[][2], int pipe_count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < pipe_count)
@@ -38,7 +38,6 @@ void	close_pipes(int pipe_fds[][2], int pipe_count)
 		i++;
 	}
 }
-
 
 int	(*create_pipes(t_command *cmd))[2]
 {
@@ -50,7 +49,7 @@ int	(*create_pipes(t_command *cmd))[2]
 	pipe_count = count_cmds(cmd) - 1;
 	if (pipe_count <= 0)
 		return (NULL);
-	pipes = malloc(pipe_count * sizeof(int[2]));
+	pipes = malloc(pipe_count * sizeof (int [2]));
 	if (!pipes)
 	{
 		perror("malloc");
@@ -67,7 +66,7 @@ int	(*create_pipes(t_command *cmd))[2]
 pid_t	*allocate_pids(int cmd_count, int (*pipes)[2])
 {
 	pid_t	*pids;
-	int pipe_count;
+	int		pipe_count;
 
 	pipe_count = cmd_count - 1;
 	pids = malloc(cmd_count * sizeof(pid_t));

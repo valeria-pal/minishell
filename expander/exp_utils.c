@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 14:52:49 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/14 20:43:23 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:48:14 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*qmark_gv(char *result, t_bash *bash_struct, int *i)
 	char	*exit_status;
 
 	exit_status = ft_itoa(bash_struct->last_exit_status);
-	temp = ft_strjoin(result, exit_status); // free temp??
+	temp = ft_strjoin(result, exit_status);
 	free(exit_status);
 	free(result);
 	result = temp;
@@ -101,5 +101,5 @@ char	*expand_variable(char *str, t_bash *bash_struct)
 		else
 			result = append_char(result, str[i++]);
 	}
-	return (result); // have to free later
+	return (result);
 }
