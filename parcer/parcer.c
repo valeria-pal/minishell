@@ -20,7 +20,12 @@ char	*normalize_word(char *original_word, t_bash *bash_struct)
 	if (original_word[0] == DQ)
 		return (strip_double_quotes_and_expand(original_word, bash_struct));
 	if (has_dollar(original_word))
-		return (expand_variable(ft_strdup(original_word), bash_struct));
+	{
+		char *dup = ft_strdup(original_word);
+		char *result = expand_variable(dup, bash_struct);
+		free(dup);
+		return result;
+	}
 	return (ft_strdup(original_word));
 }
 

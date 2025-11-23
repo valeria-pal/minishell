@@ -51,7 +51,7 @@ int	heredoc(char *delimiter)
 
 	fd_temp = open("fd_temp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd_temp < 0)
-		return (printf("fd_temp didn't open\n"), 1);
+		return (perror("heredoc"), 1);
 	pid = fork();
 	if (pid == 0)
 		handle_child_heredoc(delimiter, fd_temp);
@@ -63,6 +63,7 @@ int	heredoc(char *delimiter)
 	else
 	{
 		perror("fork failed");
+		close(fd_temp);
 		return (1);
 	}
 	return (0);

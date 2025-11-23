@@ -22,6 +22,11 @@ t_redirection	*new_redirection(t_redir_type type, char *filename)
 		return (NULL);
 	redir->type = type;
 	redir->filename = ft_strdup(filename);
+	if (!redir->filename)
+	{
+		free(redir);
+		return (NULL);
+	}
 	redir->next = NULL;
 	return (redir);
 }
