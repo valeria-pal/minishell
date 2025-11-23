@@ -53,9 +53,9 @@ static pid_t	launch_command(t_command *cmd, int i, int cmd_count,
 			print_command_not_found(cmd, bash);
 			exit(127);
 		}
-		handle_redirections_or_exit(cmd, path);
 		if (pipe_count > 0 && pipes != NULL)
 			setup_pipes_for_child(i, cmd_count, pipes, pipe_count);
+		handle_redirections_or_exit(cmd, path);
 		if (pipe_count > 0 && pipes != NULL)
 			close_pipes(pipes, pipe_count);
 		execve(path, cmd->argv, bash->envp);
