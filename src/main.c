@@ -18,12 +18,15 @@ int	main(int argc, char **argv, char **envp)
 	t_bash	bash_struct;
 
 	(void)argv;
-	bash_struct.envp = envp;
-	bash_struct.last_exit_status = 0;
 	if (argc != 1)
 		return (ft_putstr_fd("Incorrect arguments count!\n", 2), 1);
+	bash_struct.envp = copy_env(envp);
+	if (!bash_struct.envp)
+		return (ft_putstr_fd("Failed to copy environment\n", 2), 1);
+	bash_struct.last_exit_status = 0;
 	set_termios();
 	setup_signals();
 	prompt(&bash_struct);
+	free_env(bash_struct.envp);
 	return (0);
 }

@@ -27,8 +27,8 @@ int	exec_builtin(t_command *cmd, t_bash *bash)
 	// 	status = builtin_pwd();
 	// else if (ft_strcmp(cmd->argv[0], "export") == 0)
 	// 	status = builtin_export(cmd->argv, &bash->envp);
-	// else if (ft_strcmp(cmd->argv[0], "unset") == 0)
-	// 	status = builtin_unset(cmd->argv, &bash->envp);
+	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
+		status = builtin_unset(cmd->argv, &bash->envp);
 	// else if (ft_strcmp(cmd->argv[0], "env") == 0)
 	// 	status = builtin_env(bash->envp);
 	// else if (ft_strcmp(cmd->argv[0], "exit") == 0)

@@ -95,6 +95,11 @@ char							*ft_itoa(int num);
 int								ft_strncmp(const char *s1, const char *s2,
 									size_t n);
 
+// Environment utilities
+char							**copy_env(char **envp);
+void							free_env(char **envp);
+int								count_env(char **envp);
+
 // Tokenizer
 int								append_token(t_token **head, t_token **tail,
 									t_token *node);

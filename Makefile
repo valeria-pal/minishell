@@ -8,9 +8,11 @@ LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 #executor/builtins/execute_builtins.c
 SRC = src/main.c \
 	  src/utils.c \
+	  src/env_utils.c \
 	  src/signals.c \
 	  src/prompt.c \
 	  executor/builtins/cd.c\
+	  executor/builtins/unset.c\
 	  executor/builtins/execute_builtins.c\
 	  executor/execution/execute_function.c \
       executor/execution/executor_utils.c \
