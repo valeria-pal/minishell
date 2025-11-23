@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 12:35:45 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/14 20:43:10 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 12:13:00 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ char	*ft_itoa(int num)
 		n /= 10;
 	}
 	return (dst);
+}
+
+int ft_strcmp(const char *str1, const char *str2)
+{
+    while (*str1 != '\0' && *str2 != '\0' && *str1 == *str2)
+        str1++, str2++;
+    return (*str1 - *str2);
 }

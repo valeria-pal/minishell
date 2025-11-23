@@ -6,20 +6,23 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/14 20:54:15 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 12:26:52 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
 
@@ -76,6 +79,10 @@ typedef struct s_command
 
 // Utils
 int								is_space(char c);
+int								ft_strcmp(const char *str1, const char *str2);
+char							**ft_split(char const *s, char c);
+char							*ft_strchr(const char *s, int c);
+void							free_split(char **arr);
 void							*ft_memset(void *s, int value, size_t n);
 char							*ft_strdup(const char *s1);
 char							*ft_strndup(const char *s1, size_t n);
@@ -102,7 +109,25 @@ int								process_token(const char *line, int *i,
 int								skip_spaces(const char *line, int i);
 t_toktype						get_operator_type(const char *s, int *len);
 
-// Syntax check
+// Executor
+
+int								count_cmds(t_command *cmd);
+void							close_pipes(int pipe_fds[][2], int pipe_count);
+void							pipe_error_check(int pipe_fds[][2], int i);
+void							errno_checker(void);
+void							check_fork_error(pid_t pid);
+void							handle_redirections_or_exit(t_command *cmd,
+									char *path);
+int								(*create_pipes(t_command *cmd))[2];
+pid_t							*allocate_pids(int cmd_count, int (*pipes)[2]);
+char							*find_path(const char *cmd);
+int								apply_redirections_to_cmd(t_command *cmd);
+int								apply_redirect(t_redirection *rd);
+void							execute_pipeline(t_command *cmd, t_bash *bash);
+void							print_command_not_found(t_command *cmd,
+									t_bash *bash);
+int								decode_errors(int status);
+void execute(t_command *cmd, t_bash *bash);
 
 // Parcer
 t_redirection					*new_redirection(t_redir_type type,
@@ -140,6 +165,7 @@ void							signal_handler(int signum);
 void							setup_signals(void);
 void							set_termios(void);
 void							rl_utils(void);
+void							setup_child_signals(void);
 void							prompt(t_bash *bash_struct);
 
 #endif
