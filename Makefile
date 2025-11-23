@@ -26,6 +26,7 @@ SRC = src/main.c \
 	  parcer/par_utils.c\
 	  parcer/quotes_and_expand.c\
 	  parcer/parse_1cm_utils.c\
+	  parcer/heredoc.c\
 	  expander/exp_utils.c\
 	  parcer/syntax_errors.c\
 	  libft/libft_utils1.c\

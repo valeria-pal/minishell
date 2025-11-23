@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 12:26:52 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/23 17:32:48 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ char							*normalize_word(char *original_word,
 int								count_args_until_pipe(t_token *tok);
 int								add_redirection(t_command *cmd,
 									t_token **tok_ptr);
+int								add_heredoc_redir(t_command *cmd, t_token **tok_ptr);
+int								heredoc(char *delimiter);
 
 // Expander
 char							*my_getenv(t_bash *bash_struct,
