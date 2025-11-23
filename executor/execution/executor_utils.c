@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 #include <stdio.h>
+#include "../../include/minishell.h"
 
 static char	*release_command_with_backslash_and_path(char *result,
 		char *cmd_with_backslash, char **start)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	pipe_error_check(int pipe_fds[][2], int i)
 {

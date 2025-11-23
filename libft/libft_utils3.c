@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 #include <stdio.h>
+#include "../include/minishell.h"
 
 static int	find_length(int n)
 {

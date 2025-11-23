@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 #include <stdio.h>
+#include "../../include/minishell.h"
 
 int	count_cmds(t_command *cmd)
 {

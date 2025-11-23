@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 #include <stdio.h>
+#include "../../include/minishell.h"
 
 static void	setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2],
 		int pipe_count)

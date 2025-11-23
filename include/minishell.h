@@ -162,6 +162,16 @@ int								heredoc(char *delimiter);
 char							*my_getenv(t_bash *bash_struct,
 									const char *name);
 
+// Builtins
+int								exec_builtin(t_command *cmd, t_bash *bash);
+int								builtin_cd(char **argv, char ***envp);
+int								builtin_echo(char **argv);
+int								builtin_pwd(void);
+int								builtin_export(char **argv, char ***envp);
+int								builtin_unset(char **argv, char ***envp);
+int								builtin_env(char **envp);
+int								builtin_exit(char **argv, t_bash *bash);
+
 // Signals and terminal settings
 extern volatile sig_atomic_t	g_sig;
 void							signal_handler(int signum);

@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <stdio.h>
+#include "../../include/minishell.h"
 
 int	decode_errors(int status)
 {
@@ -91,8 +92,8 @@ void	execute(t_command *cmd, t_bash *bash)
 	cmd_count = count_cmds(cmd);
 	if (!cmd)
 		return ;
-	// if (cmd_count == 1 && cmd->argv && cmd->argv[0] && exec_builtin(cmd,bash) != -1)
-	//	return ;
+	if (cmd_count == 1 && cmd->argv && cmd->argv[0] && exec_builtin(cmd, bash) != -1)
+		return ;
 	if (cmd_count == 1)
 		execute_one_cmd(cmd, bash);
 	else

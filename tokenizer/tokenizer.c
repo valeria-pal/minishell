@@ -108,7 +108,7 @@ void	tokenize_output(const char *line, t_bash *bash_struct)
 	}
 	if (check_syntax_errors(tokens))
 	{
-		printf("Tokenization failed\n");
+		// printf("Tokenization failed\n");
 		free_tokenlist(tokens);
 		return ;
 	}
@@ -116,7 +116,7 @@ void	tokenize_output(const char *line, t_bash *bash_struct)
 	commands = parse_pipeline(tokens, bash_struct);
 	if (!commands)
 	{
-		printf("Parsing failed\n");
+		// printf("Parsing failed\n");
 		free_tokenlist(tokens);
 		return ;
 	}

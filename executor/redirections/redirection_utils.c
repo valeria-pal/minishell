@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 static int	apply_rd_in(t_redirection *rd)
 {

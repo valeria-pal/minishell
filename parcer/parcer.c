@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 #include <stdio.h>
+#include "../include/minishell.h"
 
 char	*normalize_word(char *original_word, t_bash *bash_struct)
 {

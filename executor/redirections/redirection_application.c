@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	apply_redirections_to_cmd( t_command *cmd)
 {
