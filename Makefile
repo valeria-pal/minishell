@@ -12,6 +12,7 @@ SRC = src/main.c \
 	  src/signals.c \
 	  src/prompt.c \
 	  executor/builtins/cd.c\
+	  executor/builtins/pwd.c\
 	  executor/builtins/unset.c\
 	  executor/builtins/execute_builtins.c\
 	  executor/execution/execute_function.c \
