@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:46:57 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/24 16:47:12 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:06:18 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	builtin_export(char **argv, char ***envp)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	if (!argv[1])
 	{

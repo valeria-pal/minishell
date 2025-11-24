@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:29:32 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/24 14:30:00 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:05:46 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	builtin_exit(char **argv, t_bash *bash)
 	if (argv[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		// bash->last_exit_status = 1;
 		return (1);
 	}
 	if (!is_numeric(argv[1]))

@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:42:00 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/24 16:47:34 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:05:30 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,3 @@ void	print_all_exports(char **envp)
 		i++;
 	}
 }
-
