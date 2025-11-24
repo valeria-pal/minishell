@@ -6,30 +6,30 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 20:51:36 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 21:00:00 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:51:43 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../include/minishell.h"
 
-static int	is_valid_identifier(const char *str)
-{
-	int	i;
+// static int	is_valid_identifier(const char *str)
+// {
+// 	int	i;
 
-	if (!str || !str[0])
-		return (0);
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (0);
-	i = 1;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// 	if (!str || !str[0])
+// 		return (0);
+// 	if (!ft_isalpha(str[0]) && str[0] != '_')
+// 		return (0);
+// 	i = 1;
+// 	while (str[i])
+// 	{
+// 		if (!ft_isalnum(str[i]) && str[i] != '_')
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 static int	find_env_index(char **envp, const char *key)
 {

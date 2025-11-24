@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:42:23 by vpozniak          #+#    #+#             */
-/*   Updated: 2025/11/23 19:44:00 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:49:20 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void							errno_checker(void);
 void							check_fork_error(pid_t pid);
 void							handle_redirections_or_exit(t_command *cmd,
 									char *path);
-int								(*create_pipes(t_command *cmd))[2];
+int (*create_pipes(t_command *cmd))[2];
 pid_t							*allocate_pids(int cmd_count, int (*pipes)[2]);
 char							*find_path(const char *cmd);
 int								apply_redirections_to_cmd(t_command *cmd);
@@ -176,6 +176,14 @@ int								builtin_export(char **argv, char ***envp);
 int								builtin_unset(char **argv, char ***envp);
 int								builtin_env(char **envp);
 int								builtin_exit(char **argv, t_bash *bash);
+// builtin export
+int								is_valid_identifier(const char *str);
+int								find_env_var(char **envp, const char *key,
+									size_t key_len);
+char							**realloc_env(char **old_env, int new_size);
+int								update_env_var(char ***envp, char *arg);
+void							print_all_exports(char **envp);
+int								builtin_export(char **argv, char ***envp);
 
 // Signals and terminal settings
 extern volatile sig_atomic_t	g_sig;

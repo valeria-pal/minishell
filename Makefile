@@ -17,6 +17,8 @@ SRC = src/main.c \
 	  executor/builtins/exit.c\
 	  executor/builtins/pwd.c\
 	  executor/builtins/unset.c\
+	  executor/builtins/export.c\
+	  executor/builtins/export_utils.c\
 	  executor/builtins/execute_builtins.c\
 	  executor/execution/execute_function.c \
       executor/execution/executor_utils.c \
