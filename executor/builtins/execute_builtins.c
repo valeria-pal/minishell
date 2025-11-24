@@ -31,8 +31,8 @@ int	exec_builtin(t_command *cmd, t_bash *bash)
 		status = builtin_unset(cmd->argv, &bash->envp);
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
 		status = builtin_env(bash->envp);
-	// else if (ft_strcmp(cmd->argv[0], "exit") == 0)
-	// 	status = builtin_exit(cmd->argv, bash);
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		status = builtin_exit(cmd->argv, bash);
 	else
 		return (-1);
 	bash->last_exit_status = status;
