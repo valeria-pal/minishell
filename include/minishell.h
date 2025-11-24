@@ -131,7 +131,7 @@ void							errno_checker(void);
 void							check_fork_error(pid_t pid);
 void							handle_redirections_or_exit(t_command *cmd,
 									char *path);
-int (*create_pipes(t_command *cmd))[2];
+int								(*create_pipes(t_command *cmd))[2];
 pid_t							*allocate_pids(int cmd_count, int (*pipes)[2]);
 char							*find_path(const char *cmd);
 int								apply_redirections_to_cmd(t_command *cmd);
@@ -140,7 +140,8 @@ void							execute_pipeline(t_command *cmd, t_bash *bash);
 void							print_command_not_found(t_command *cmd,
 									t_bash *bash);
 int								decode_errors(int status);
-int								wait_for_all_children(pid_t *pids, int cmd_count);
+int								wait_for_all_children(pid_t *pids,
+									int cmd_count);
 void							execute(t_command *cmd, t_bash *bash);
 
 // Parcer
