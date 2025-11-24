@@ -28,7 +28,8 @@ static int	get_word_len(const char *line, int i)
 			i++;
 			len++;
 		}
-		len++;
+		if (line[i] == q)
+			len++;
 		return (len);
 	}
 	while (line[i] && !is_space(line[i]) && line[i] != '|' && line[i] != '<'
