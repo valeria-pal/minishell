@@ -23,8 +23,10 @@ int	decode_errors(int status)
 }
 
 static int	check_id_after_fork(int id, char *path, t_command *cmd,
-		char *const envp[])
+		t_bash *bash)
 {
+	int	status;
+
 	if (id < 0)
 	{
 		perror("fork");
@@ -35,7 +37,10 @@ static int	check_id_after_fork(int id, char *path, t_command *cmd,
 	{
 		if (apply_redirections_to_cmd(cmd) < 0)
 			exit(1);
-		execve(path, cmd->argv, envp);
+		status = exec_builtin(cmd, bash);
+		if (status != -1)
+			exit(status);
+		execve(path, cmd->argv, bash->envp);
 		perror("execve");
 		free(path);
 		if (errno == EACCES)
@@ -64,24 +69,29 @@ void	execute_one_cmd(t_command *cmd, t_bash *bash)
 	int		status;
 
 	path = find_path(cmd->argv[0]);
-	if (!path)
+	if (!path && exec_builtin(cmd, bash) == -1)
 	{
 		print_command_not_found(cmd, bash);
 		return ;
 	}
 	id = fork();
-	if (check_id_after_fork(id, path, cmd, bash->envp))
+	if (check_id_after_fork(id, path, cmd, bash))
 	{
 		bash->last_exit_status = 1;
+		if (path)
+			free(path);
 		return ;
 	}
 	if (waitpid(id, &status, 0) < 0)
 	{
 		perror("waitpid");
 		bash->last_exit_status = 1;
+		if (path)
+			free(path);
 		return ;
 	}
-	free(path);
+	if (path)
+		free(path);
 	bash->last_exit_status = decode_errors(status);
 }
 
@@ -92,7 +102,8 @@ void	execute(t_command *cmd, t_bash *bash)
 	cmd_count = count_cmds(cmd);
 	if (!cmd)
 		return ;
-	if (cmd_count == 1 && cmd->argv && cmd->argv[0] && exec_builtin(cmd, bash) != -1)
+	if (cmd_count == 1 && cmd->argv && cmd->argv[0]
+		&& !cmd->redirs && exec_builtin(cmd, bash) != -1)
 		return ;
 	if (cmd_count == 1)
 		execute_one_cmd(cmd, bash);

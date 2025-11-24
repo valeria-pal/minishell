@@ -1,0 +1,13 @@
+executor
+expander
+include
+libft
+Makefile
+minishell
+out.txt
+out1.txt
+parcer
+src
+supp.supp
+tokenizer
+lol
