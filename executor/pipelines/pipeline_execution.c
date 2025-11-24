@@ -36,95 +36,76 @@ static void	setup_pipes_for_child(int i, int cmd_count, int (*pipes)[2],
 	}
 }
 
-static pid_t	launch_command(t_command *cmd, int i, int cmd_count,
-		int (*pipes)[2], int pipe_count, t_bash *bash)
+static void	execute_child_process(t_command *cmd, t_pipe_ctx *ctx, t_bash *bash)
+{
+	char	*path;
+
+	setup_child_signals();
+	path = find_path(cmd->argv[0]);
+	if (!path)
+	{
+		print_command_not_found(cmd, bash);
+		exit(127);
+	}
+	if (ctx->pipe_count > 0 && ctx->pipes != NULL)
+		setup_pipes_for_child(ctx->i, ctx->cmd_count, ctx->pipes,
+			ctx->pipe_count);
+	handle_redirections_or_exit(cmd, path);
+	if (ctx->pipe_count > 0 && ctx->pipes != NULL)
+		close_pipes(ctx->pipes, ctx->pipe_count);
+	execve(path, cmd->argv, bash->envp);
+	perror("execve");
+	free(path);
+	errno_checker();
+}
+
+static pid_t	launch_command(t_command *cmd, t_pipe_ctx *ctx, t_bash *bash)
 {
 	pid_t	pid;
-	char	*path;
 
 	pid = fork();
 	check_fork_error(pid);
 	if (pid == 0)
-	{
-		setup_child_signals();
-		path = find_path(cmd->argv[0]);
-		if (!path)
-		{
-			print_command_not_found(cmd, bash);
-			exit(127);
-		}
-		if (pipe_count > 0 && pipes != NULL)
-			setup_pipes_for_child(i, cmd_count, pipes, pipe_count);
-		handle_redirections_or_exit(cmd, path);
-		if (pipe_count > 0 && pipes != NULL)
-			close_pipes(pipes, pipe_count);
-		execve(path, cmd->argv, bash->envp);
-		perror("execve");
-		free(path);
-		errno_checker();
-	}
+		execute_child_process(cmd, ctx, bash);
 	return (pid);
 }
 
-static int	wait_for_all_children(pid_t *pids, int cmd_count)
-{
-	int	i;
-	int	status;
-	int	last_status;
-
-	i = 0;
-	last_status = 0;
-	while (i < cmd_count)
-	{
-		if (waitpid(pids[i], &status, 0) == -1)
-			perror("waitpid");
-		else
-			last_status = decode_errors(status);
-		i++;
-	}
-	return (last_status);
-}
-
-static void	run_pipeline_and_wait(t_command *cmd, int cmd_count,
-		int (*pipes)[2], int pipe_count, t_bash *bash)
+static void	run_pipeline_and_wait(t_command *cmd, t_pipe_ctx *ctx, t_bash *bash)
 {
 	pid_t		*pids;
 	t_command	*current;
-	int			i;
 	int			status;
 
-	pids = allocate_pids(cmd_count, pipes);
+	pids = allocate_pids(ctx->cmd_count, ctx->pipes);
 	current = cmd;
-	i = 0;
-	while (i < cmd_count && current)
+	ctx->i = 0;
+	while (ctx->i < ctx->cmd_count && current)
 	{
-		pids[i] = launch_command(current, i, cmd_count, pipes, pipe_count,
-				bash);
+		pids[ctx->i] = launch_command(current, ctx, bash);
 		current = current->next;
-		i++;
+		ctx->i++;
 	}
-	if (pipe_count > 0 && pipes != NULL)
+	if (ctx->pipe_count > 0 && ctx->pipes != NULL)
 	{
-		close_pipes(pipes, pipe_count);
-		free(pipes);
+		close_pipes(ctx->pipes, ctx->pipe_count);
+		free(ctx->pipes);
 	}
-	status = wait_for_all_children(pids, cmd_count);
+	status = wait_for_all_children(pids, ctx->cmd_count);
 	free(pids);
 	bash->last_exit_status = status;
 }
 
 void	execute_pipeline(t_command *cmd, t_bash *bash)
 {
-	int	cmd_count;
-	int	pipe_count;
-	int	(*pipes)[2];
+	t_pipe_ctx	ctx;
 
-	cmd_count = count_cmds(cmd);
-	if (cmd_count == 0)
+	ctx.cmd_count = count_cmds(cmd);
+	if (ctx.cmd_count == 0)
 		return ;
-	pipe_count = cmd_count - 1;
-	pipes = NULL;
-	if (pipe_count > 0)
-		pipes = create_pipes(cmd);
-	run_pipeline_and_wait(cmd, cmd_count, pipes, pipe_count, bash);
+	ctx.pipe_count = ctx.cmd_count - 1;
+	ctx.pipes = NULL;
+	ctx.i = 0;
+	if (ctx.pipe_count > 0)
+		ctx.pipes = create_pipes(cmd);
+	run_pipeline_and_wait(cmd, &ctx, bash);
 }

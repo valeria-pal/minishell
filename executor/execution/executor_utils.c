@@ -66,3 +66,12 @@ char	*find_path(const char *cmd)
 	free(envp_path);
 	return (candidate_path);
 }
+
+int	decode_errors(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (1);
+}

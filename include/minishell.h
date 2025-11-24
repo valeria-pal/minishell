@@ -77,6 +77,14 @@ typedef struct s_command
 	struct s_command			*next;
 }								t_command;
 
+typedef struct s_pipe_ctx
+{
+	int							(*pipes)[2];
+	int							pipe_count;
+	int							cmd_count;
+	int							i;
+}								t_pipe_ctx;
+
 // Utils
 int								is_space(char c);
 int								ft_strcmp(const char *str1, const char *str2);
@@ -132,6 +140,7 @@ void							execute_pipeline(t_command *cmd, t_bash *bash);
 void							print_command_not_found(t_command *cmd,
 									t_bash *bash);
 int								decode_errors(int status);
+int								wait_for_all_children(pid_t *pids, int cmd_count);
 void							execute(t_command *cmd, t_bash *bash);
 
 // Parcer

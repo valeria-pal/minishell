@@ -82,3 +82,22 @@ pid_t	*allocate_pids(int cmd_count, int (*pipes)[2])
 	}
 	return (pids);
 }
+
+int	wait_for_all_children(pid_t *pids, int cmd_count)
+{
+	int	i;
+	int	status;
+	int	last_status;
+
+	i = 0;
+	last_status = 0;
+	while (i < cmd_count)
+	{
+		if (waitpid(pids[i], &status, 0) == -1)
+			perror("waitpid");
+		else
+			last_status = decode_errors(status);
+		i++;
+	}
+	return (last_status);
+}

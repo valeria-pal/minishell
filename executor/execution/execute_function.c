@@ -13,15 +13,6 @@
 #include <stdio.h>
 #include "../../include/minishell.h"
 
-int	decode_errors(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (1);
-}
-
 static int	check_id_after_fork(int id, char *path, t_command *cmd,
 		t_bash *bash)
 {
@@ -30,8 +21,7 @@ static int	check_id_after_fork(int id, char *path, t_command *cmd,
 	if (id < 0)
 	{
 		perror("fork");
-		free(path);
-		return (1);
+		return (free(path), 1);
 	}
 	if (id == 0)
 	{
@@ -62,11 +52,27 @@ void	print_command_not_found(t_command *cmd, t_bash *bash)
 	return ;
 }
 
+static void	handle_parent_wait(pid_t id, char *path, t_bash *bash)
+{
+	int	status;
+
+	if (waitpid(id, &status, 0) < 0)
+	{
+		perror("waitpid");
+		bash->last_exit_status = 1;
+		if (path)
+			free(path);
+		return ;
+	}
+	if (path)
+		free(path);
+	bash->last_exit_status = decode_errors(status);
+}
+
 void	execute_one_cmd(t_command *cmd, t_bash *bash)
 {
 	pid_t	id;
 	char	*path;
-	int		status;
 
 	path = find_path(cmd->argv[0]);
 	if (!path && exec_builtin(cmd, bash) == -1)
@@ -82,17 +88,7 @@ void	execute_one_cmd(t_command *cmd, t_bash *bash)
 			free(path);
 		return ;
 	}
-	if (waitpid(id, &status, 0) < 0)
-	{
-		perror("waitpid");
-		bash->last_exit_status = 1;
-		if (path)
-			free(path);
-		return ;
-	}
-	if (path)
-		free(path);
-	bash->last_exit_status = decode_errors(status);
+	handle_parent_wait(id, path, bash);
 }
 
 void	execute(t_command *cmd, t_bash *bash)
