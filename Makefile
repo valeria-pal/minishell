@@ -13,6 +13,7 @@ SRC = src/main.c \
 	  src/prompt.c \
 	  executor/builtins/cd.c\
 	  executor/builtins/echo.c\
+	  executor/builtins/env.c\
 	  executor/builtins/pwd.c\
 	  executor/builtins/unset.c\
 	  executor/builtins/execute_builtins.c\

@@ -6,7 +6,7 @@
 /*   By: vpozniak <vpozniak@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 23:07:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/11/24 11:06:23 by vpozniak         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:05:52 by vpozniak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	exec_builtin(t_command *cmd, t_bash *bash)
 	// 	status = builtin_export(cmd->argv, &bash->envp);
 	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
 		status = builtin_unset(cmd->argv, &bash->envp);
-	// else if (ft_strcmp(cmd->argv[0], "env") == 0)
-	// 	status = builtin_env(bash->envp);
+	else if (ft_strcmp(cmd->argv[0], "env") == 0)
+		status = builtin_env(bash->envp);
 	// else if (ft_strcmp(cmd->argv[0], "exit") == 0)
 	// 	status = builtin_exit(cmd->argv, bash);
 	else
